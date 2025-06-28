@@ -1,6 +1,5 @@
 import { Navbar } from 'components/layout/navbar';
 import { GeistSans } from 'geist/font/sans';
-import { getCart } from 'lib/shopify';
 import { baseUrl } from 'lib/utils';
 import { ReactNode } from 'react';
 import './globals.css';
@@ -25,7 +24,6 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   // Don't await the fetch, pass the Promise to the context provider
-  const cart = getCart();
 
   return (
     <html lang="en" className={GeistSans.variable}>
@@ -34,8 +32,6 @@ export default async function RootLayout({
           <Navbar />
           <main>
             {children}
-            {/* <Toaster closeButton /> */}
-            {/* <WelcomeToast /> */}
           </main>
         {/* </CartProvider> */}
       </body>
