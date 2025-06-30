@@ -19,6 +19,8 @@ export async function generateMetadata(props: {
 export default async function Page(props: {
   params: Promise<{ page: string }>;
 }) {
+
+  // TODO this form submission needs to be handle using api router POST: /forms/general
   return (
     <div className="m-4">
       <h1 className="mb-8 text-2xl font-bold">{`General Contact Form`}</h1>
@@ -28,7 +30,6 @@ export default async function Page(props: {
       />
       <div className="flex justify-center w-full">
         <form
-          data-netlify="true"
           name="contact"
           method="POST"
           className="space-y-4 w-1/2"
