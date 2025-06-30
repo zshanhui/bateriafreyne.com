@@ -2,7 +2,7 @@
 
 A high-performance, server-rendered Next.js App Router eCommerce application designed for industrial B2B suppliers/manufacturers
 
-This template uses React Server Components, Server Actions, `Suspense`, `useOptimistic`, and more.
+This template uses React Server Components, Server Actions, `Suspense`, `useOptimistic`, and more. Based and modified from Vercel's Next.js Commerce Shopify template.
 
 <h3 id="v1-note"></h3>
 
@@ -22,12 +22,6 @@ Integrations enable upgraded or additional functionality for Next.js Commerce
 
 You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js Commerce. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables) for this, but a `.env` file is all that is necessary.
 
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control your Shopify store.
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
-
 ```bash
 pnpm install
 pnpm dev
@@ -35,6 +29,14 @@ pnpm dev
 
 Your app should now be running on [localhost:3000](http://localhost:3000/).
 
-## Vercel, Next.js Commerce, and Shopify Integration Guide
+## Next.js Commerce, and Shopify Integration Guide
 
 You can use this comprehensive [integration guide](https://vercel.com/docs/integrations/ecommerce/shopify) with step-by-step instructions on how to configure Shopify as a headless CMS using Next.js Commerce as your headless Shopify storefront
+
+## Deploying on Netlify Cloud
+
+To be added...
+
+## About 23Kuajing Networks
+
+to be added...

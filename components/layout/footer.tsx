@@ -60,7 +60,7 @@ export default async function Footer() {
             <a href="https://github.com/vercel/commerce">View the source</a>
           </p>
           <p className="md:ml-auto">
-            <a href="https://vercel.com" className="text-black dark:text-white">
+            <a href="https://23kuajing.com" className="text-black dark:text-white">
               Created by 23Kuajing
             </a>
           </p>

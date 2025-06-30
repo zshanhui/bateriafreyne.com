@@ -78,6 +78,9 @@ export async function shopifyFetch<T>({
   variables?: ExtractVariables<T>;
 }): Promise<{ status: number; body: T } | never> {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
     const result = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -88,8 +91,11 @@ export async function shopifyFetch<T>({
       body: JSON.stringify({
         ...(query && { query }),
         ...(variables && { variables })
-      })
+      }),
+      signal: controller.signal
     });
+
+    clearTimeout(timeoutId);
 
     const body = await result.json();
 
@@ -102,6 +108,15 @@ export async function shopifyFetch<T>({
       body
     };
   } catch (e) {
+    if (e instanceof DOMException && e.name === 'AbortError') {
+      throw {
+        cause: 'timeout',
+        status: 408,
+        message: 'Request timeout after 5 seconds',
+        query
+      };
+    }
+
     if (isShopifyError(e)) {
       throw {
         cause: e.cause?.toString() || 'unknown',
@@ -313,16 +328,22 @@ export async function getCollectionProducts({
   cacheTag(TAGS.collections, TAGS.products);
   cacheLife('days');
 
-  const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
-    query: getCollectionProductsQuery,
-    variables: {
-      handle: collection,
-      reverse,
-      sortKey: sortKey === 'CREATED_AT' ? 'CREATED' : sortKey
-    }
-  });
+  let res = null;
+  try {
+    res = await shopifyFetch<ShopifyCollectionProductsOperation>({
+      query: getCollectionProductsQuery,
+      variables: {
+        handle: collection,
+        reverse,
+        sortKey: sortKey === 'CREATED_AT' ? 'CREATED' : sortKey
+      }
+    });
+  } catch {
+    console.log('got here, collection query error: ', res)
+    return [];
+  }
 
-  if (!res.body.data.collection) {
+  if (!res!.body.data.collection) {
     console.log(`No collection found for \`${collection}\``);
     return [];
   }
