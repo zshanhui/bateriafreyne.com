@@ -1,3 +1,8 @@
+import fs from 'fs';
+import matter from 'gray-matter';
+import MarkdownIt from 'markdown-it';
+import path from 'path';
+
 import {
   HIDDEN_PRODUCT_TAG,
   SHOPIFY_GRAPHQL_API_ENDPOINT,
@@ -112,7 +117,7 @@ export async function shopifyFetch<T>({
       throw {
         cause: 'timeout',
         status: 408,
-        message: 'Request timeout after 5 seconds',
+        message: 'Request timeout after 8 seconds',
         query
       };
     }
@@ -414,6 +419,37 @@ export async function getPage(handle: string): Promise<Page> {
   });
 
   return res.body.data.pageByHandle;
+}
+
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true
+})
+
+export interface ManufacturerMarkdownContent {
+  handle: string
+  content: string
+  frontmatter: {
+    title: string
+    dateUpdated: string
+    [key: string]: string
+  }
+}
+
+export function getManufacturerFrontPage(handle: string = 'marsicarbs'): ManufacturerMarkdownContent {
+  console.log('got getManufacturerFrontPage handle >> ', handle)
+  const filePath = path.join(process.cwd(), 'content', 'manufacturers', `${handle}.md`);
+  const fc = fs.readFileSync(filePath, 'utf8')
+  const { data: frontMatter, content } = matter(fc)
+  console.log('front matter >> ', frontMatter)
+  console.log('content >> ', content)
+
+  return {
+    handle,
+    content: md.render(content),
+    frontmatter: frontMatter as ManufacturerMarkdownContent['frontmatter'],
+  };
 }
 
 export async function getPages(): Promise<Page[]> {
