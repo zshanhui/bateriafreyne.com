@@ -433,17 +433,22 @@ export interface ManufacturerMarkdownContent {
   frontmatter: {
     title: string
     dateUpdated: string
+    images: any
     [key: string]: string
   }
 }
 
-export function getManufacturerFrontPage(handle: string = 'marsicarbs'): ManufacturerMarkdownContent {
-  console.log('got getManufacturerFrontPage handle >> ', handle)
+export function getManufacturerFrontPage(handle: string): ManufacturerMarkdownContent {
+  // console.log('got getManufacturerFrontPage handle >> ', handle)
   const filePath = path.join(process.cwd(), 'content', 'manufacturers', `${handle}.md`);
   const fc = fs.readFileSync(filePath, 'utf8')
   const { data: frontMatter, content } = matter(fc)
-  console.log('front matter >> ', frontMatter)
-  console.log('content >> ', content)
+  // console.log('front matter >> ', frontMatter)
+  // console.log('content >> ', content)
+
+  if (typeof frontMatter.images === 'string') {
+    frontMatter.images = frontMatter.images.split(',').map(img => img.trim())
+  }
 
   return {
     handle,

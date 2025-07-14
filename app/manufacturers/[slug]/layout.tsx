@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <div className="w-full">
         <h1>Manufacturer direct front page</h1>
-        <div className="mx-8 max-w-2xl py-20 sm:mx-auto">{children}</div>
+        <div className="w-full py-20">{children}</div>
       </div>
       <Footer />
     </>

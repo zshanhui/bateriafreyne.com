@@ -1,3 +1,4 @@
+
 export default {
   experimental: {
     ppr: false,
@@ -11,6 +12,11 @@ export default {
         protocol: 'https',
         hostname: 'cdn.shopify.com',
         pathname: '/s/files/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'soppaekplyccyhrfkauf.supabase.co',
+        pathname: '/storage/v1/object/public/manufacturers/**'
       }
     ]
   }
