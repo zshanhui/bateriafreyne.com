@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import clsx from "clsx";
 import { getManufacturerFrontPage } from "lib/shopify";
 import { notFound } from "next/navigation";
+import { ImageDisplay } from "./image-display";
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
@@ -43,57 +44,76 @@ export default async function Page(props: {
         className="rounded-md p-6 mb-8"
         style={{ backgroundColor: page.frontmatter.backgroundColor }}
       >
-        {/* <div className="grid grid-cols-12 gap-4">
-          {Array.from({ length: 12 * 12 }).map((_, index) => (
-        <div
-          key={index}
-          className="bg-gray-200 border border-gray-300 flex items-center justify-center h-16"
-        >
-          {index + 1}
-        </div>
-          ))}
-        </div> */}
-        <div className="flex items-center w-full">
-          <div className="flex-shrink-0 w-50 h-34 bg-gray-200 border border-gray-300 flex items-center justify-center">
-            <span className="text-gray-500">Placeholder Image</span>
-          </div>
-          <div className="ml-6">
-            <div
-              className={clsx("flex items-center", page.frontmatter.textColor)}
-            >
-              <label className="mr-2">Brand Name:</label>
-              <span>{page.frontmatter.title}</span>
+        {/* start manufacturer header */}
+        <div className="flex">
+          <section className="flex items-center w-2/3">
+            <div className="flex-shrink-0 w-60 h-30">
+              <img
+                src={page.frontmatter.logoImage}
+                alt={`${page.frontmatter.title} logo`}
+                className="w-full h-full object-contain"
+              />
             </div>
+            <div className="ml-6">
+              <div
+                className={clsx(
+                  "flex items-center",
+                  page.frontmatter.textColor
+                )}
+              >
+                <span className="mr-2 my-auto font-semibold">Brand name:</span>
+                <span className="ml-auto my-auto">
+                  {page.frontmatter.title}
+                </span>
+              </div>
 
-            <div
-              className={clsx("flex items-center", page.frontmatter.textColor)}
-            >
-              <label className="mr-2">Legal Name:</label>
-              <span>{page.frontmatter.legalName}</span>
-            </div>
+              <div
+                className={clsx(
+                  "flex items-center",
+                  page.frontmatter.textColor
+                )}
+              >
+                <span className="mr-2 font-semibold">Legal name:</span>
+                <span className="ml-auto">{page.frontmatter.legalName}</span>
+              </div>
 
-            <div
-              className={clsx("flex items-center", page.frontmatter.textColor)}
-            >
-              <label className="mr-2">Main factory address:</label>
-              <span>{page.frontmatter.factoryAddress}</span>
+              <div
+                className={clsx(
+                  "flex items-center",
+                  page.frontmatter.textColor
+                )}
+              >
+                <span className="mr-2 font-semibold">Production address:</span>
+                <span className="ml-auto">
+                  {page.frontmatter.factoryAddress}
+                </span>
+              </div>
             </div>
-          </div>
+          </section>
+          <section className="cta2 bg-amber-500 w-1/3">CTA</section>
         </div>
-        <style>
-          {`
-            .markdown-content > h1, h2, h3, h4, p, ol, ul, span {
-              font-size: 1rem;
-              margin-bottom: 1rem;
-            }
+
+        <div className="flex gap-8 mt-6">
+          <style>
+            {`
+        .markdown-content > h1,
+        .markdown-content > h2,
+        .markdown-content > h3,
+        .markdown-content > h4,
+        .markdown-content > p,
+        .markdown-content > ul,
+        .markdown-content > span {
+          font-size: 1rem;
+          margin-bottom: 1rem;
+        }
           `}
-        </style>
-        <div
-          className="w-full markdown-content pl-5"
-          dangerouslySetInnerHTML={{ __html: page.content }}
-        ></div>
-        // Example usage of the ImageGallery component
-        {/* <ImageDisplay images={page.frontmatter.images || []} /> */}
+          </style>
+          <div
+            className="w-1/2 markdown-content"
+            dangerouslySetInnerHTML={{ __html: page.content }}
+          ></div>
+          <ImageDisplay images={page.frontmatter.images || []} />
+        </div>
       </div>
     </div>
   );
