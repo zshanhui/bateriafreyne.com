@@ -1,5 +1,8 @@
 
 export default {
+  env: {
+    NEXT_PUBLIC_URL: 'http://bateriafreyne.local'
+  },
   experimental: {
     ppr: false,
     inlineCss: true,

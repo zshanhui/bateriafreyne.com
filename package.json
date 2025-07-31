@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev -H bateriafreyne.local --turbopack",
     "build": "next build",
     "start": "next start",
     "prettier": "prettier --write --ignore-unknown .",

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const supaBaseImageRoot =
   "https://soppaekplyccyhrfkauf.supabase.co/storage/v1/object/public/manufacturers/";
@@ -10,6 +10,8 @@ export const ImageDisplay = ({ images }: { images: string[] }) => {
 
   const [showLeftShadow, setShowLeftShadow] = useState(false);
   const [showRightShadow, setShowRightShadow] = useState(true);
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
@@ -18,6 +20,47 @@ export const ImageDisplay = ({ images }: { images: string[] }) => {
       container.scrollLeft < container.scrollWidth - container.clientWidth
     );
   };
+
+  const handleImageClick = useCallback((image: string, index: number) => {
+    setSelectedImage(image);
+    
+    if (!scrollContainerRef.current) return;
+    
+    const container = scrollContainerRef.current;
+    const containerRect = container.getBoundingClientRect();
+    const scrollLeft = container.scrollLeft;
+    
+    // Find all thumbnail elements
+    const thumbnails = container.querySelectorAll('.thumbnail');
+    if (!thumbnails[index]) return;
+    
+    const clickedThumbnail = thumbnails[index] as HTMLElement;
+    const thumbnailRect = clickedThumbnail.getBoundingClientRect();
+    
+    // Check if this is the last visible thumbnail
+    const isLastVisible = thumbnailRect.right >= containerRect.right - 10; // 10px tolerance
+    
+    if (isLastVisible) {
+      // If it's the last image in the gallery, scroll to the end
+      if (index === images.length - 1) {
+        container.scrollTo({
+          left: container.scrollWidth - container.clientWidth,
+          behavior: 'smooth'
+        });
+      } else {
+        // Calculate how much to scroll to show at least 2 more thumbnails
+        const thumbnailWidth = thumbnailRect.width;
+        const spacing = 12; // space-x-3 = 12px
+        const scrollAmount = (thumbnailWidth + spacing) * 2; // Scroll by 2 thumbnails
+        
+        // Smooth scroll to show more images
+        container.scrollTo({
+          left: scrollLeft + scrollAmount,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [images.length]);
 
   return (
     <div className="image-gallery w-1/2 bg-gray-100 p-6 rounded-lg shadow-lg">
@@ -36,6 +79,7 @@ export const ImageDisplay = ({ images }: { images: string[] }) => {
       </div>
       <div className="relative bg-white p-4 rounded-md shadow-inner">
         <div
+          ref={scrollContainerRef}
           className="thumbnails flex space-x-3 overflow-scroll p-2 pl-0 scrollbar-hide"
           onScroll={handleScroll}
         >
@@ -45,7 +89,7 @@ export const ImageDisplay = ({ images }: { images: string[] }) => {
           {images.map((image, index) => (
             <div className="flex-shrink-0" key={index}>
               <button
-                onClick={() => setSelectedImage(image)}
+                onClick={() => handleImageClick(image, index)}
                 className={`thumbnail w-20 h-20 border-2 rounded-md cursor-pointer transition-all duration-200 hover:shadow-lg ${
                   selectedImage === image
                     ? "border-blue-600 shadow-md"
