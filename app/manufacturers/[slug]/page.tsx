@@ -45,55 +45,64 @@ export default async function Page(props: {
         style={{ backgroundColor: page.frontmatter.backgroundColor }}
       >
         {/* start manufacturer header */}
-        <div className="flex">
-          <section className="flex items-center w-2/3">
-            <div className="flex-shrink-0 w-60 h-30">
+        <div className="flex flex-col lg:flex-row">
+          <section className="flex flex-col lg:flex-row items-center w-full lg:w-2/3 mb-4 lg:mb-0">
+            <div className="flex-shrink-0 w-full lg:w-60 h-30 mb-4 lg:mb-0">
               <img
                 src={page.frontmatter.logoImage}
                 alt={`${page.frontmatter.title} logo`}
                 className="w-full h-full object-contain"
               />
             </div>
-            <div className="ml-6">
+            <div className="lg:ml-6 w-full">
               <div
                 className={clsx(
-                  "flex items-center",
+                  "flex flex-col lg:flex-row items-start lg:items-center",
                   page.frontmatter.textColor
                 )}
               >
-                <span className="mr-2 my-auto font-semibold">Brand name:</span>
-                <span className="ml-auto my-auto">
+                <span className="mr-2 font-semibold">Brand name:</span>
+                <span className="lg:ml-auto">
                   {page.frontmatter.title}
                 </span>
               </div>
 
               <div
                 className={clsx(
-                  "flex items-center",
+                  "flex flex-col lg:flex-row items-start lg:items-center",
                   page.frontmatter.textColor
                 )}
               >
                 <span className="mr-2 font-semibold">Legal name:</span>
-                <span className="ml-auto">{page.frontmatter.legalName}</span>
+                <span className="lg:ml-auto">{page.frontmatter.legalName}</span>
               </div>
 
               <div
                 className={clsx(
-                  "flex items-center",
+                  "flex flex-col lg:flex-row items-start lg:items-center",
                   page.frontmatter.textColor
                 )}
               >
                 <span className="mr-2 font-semibold">Production address:</span>
-                <span className="ml-auto">
+                <span className="lg:ml-auto">
                   {page.frontmatter.factoryAddress}
                 </span>
               </div>
             </div>
           </section>
-          <section className="cta2 bg-amber-500 w-1/3">CTA</section>
+          <section className="cta2 w-full lg:w-1/3 flex justify-center items-center p-6">
+            <div className="flex gap-3">
+              <button className="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 text-sm shadow-lg hover:shadow-xl cursor-pointer">
+                View Products
+              </button>
+              <button className="bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 text-sm shadow-lg hover:shadow-xl cursor-pointer">
+                Chat with Agent
+              </button>
+            </div>
+          </section>
         </div>
 
-        <div className="flex gap-8 mt-6">
+        <div className="flex flex-col lg:flex-row gap-8 mt-6">
           <style>
             {`
         .markdown-content > h1,
@@ -109,10 +118,12 @@ export default async function Page(props: {
           `}
           </style>
           <div
-            className="w-1/2 markdown-content"
+            className="w-full lg:w-1/2 markdown-content"
             dangerouslySetInnerHTML={{ __html: page.content }}
           ></div>
-          <ImageDisplay images={page.frontmatter.images || []} />
+          <div className="w-full lg:w-1/2">
+            <ImageDisplay images={page.frontmatter.images || []} />
+          </div>
         </div>
       </div>
     </div>

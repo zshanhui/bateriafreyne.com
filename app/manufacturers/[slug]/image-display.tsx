@@ -63,7 +63,7 @@ export const ImageDisplay = ({ images }: { images: string[] }) => {
   }, [images.length]);
 
   return (
-    <div className="image-gallery w-1/2 bg-gray-100 p-6 rounded-lg shadow-lg">
+    <div className="image-gallery w-full bg-gray-100 p-6 rounded-lg shadow-lg">
       <div className="large-image mb-6">
         <img
           src={`${supaBaseImageRoot}${selectedImage}`}
