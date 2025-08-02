@@ -1,18 +1,20 @@
 ---
-title: "Jetspower LFP Batteries"
-legalName: "Xuzhou Frey New Energy Co., Ltd."
-factoryAddress: "123 Industrial Park, Shanghai, China"
-shippingInfo: "Standard shipping: 5-10 business days; Express shipping: 3-5 business days"
-nearestPort: "Port of Shanghai"
+title: 'Jetspower LFP Batteries'
+legalName: 'Xuzhou Frey New Energy Co., Ltd.'
+factoryAddress: '123 Industrial Park, Shanghai, China'
+shippingInfo: 'Standard shipping: 5-10 business days; Express shipping: 3-5 business days'
+nearestPort: 'Port of Shanghai'
 certificates:
-  - "ISO 9001"
-  - "CE Certification"
-  - "RoHS Compliance"
+    - 'ISO 9001'
+    - 'CE Certification'
+    - 'RoHS Compliance'
 handle: jetspower
-backgroundColor: "#ffffff"
+backgroundColor: '#ffffff'
 textColor: text-grey-200
+banner_image: placeholder-banner.jpg
 logoImage: https://soppaekplyccyhrfkauf.supabase.co/storage/v1/object/public/manufacturers//jetspower-logo.png
-images: "jetspower-manu-01.jpg,jetspower-manu-02.jpg,jetspower-manu-03.jpg,jetspower-manu-04.jpg,jetspower-manu-05.jpg,jetspower-manu-06.jpg,jetspower-manu-07.jpg,jetspower-manu-08.jpg,jetspower-manu-09.jpg,jetspower-manu-10.jpg,jetspower-manu-11.jpg,jetspower-manu-12.jpg,jetspower-manu-13.jpg,jetspower-manu-14.jpg,jetspower-manu-15.jpg"
+images: 'jetspower-manu-01.jpg,jetspower-manu-02.jpg,jetspower-manu-03.jpg,jetspower-manu-04.jpg,jetspower-manu-05.jpg,jetspower-manu-06.jpg,jetspower-manu-07.jpg,jetspower-manu-08.jpg,jetspower-manu-09.jpg,jetspower-manu-10.jpg,jetspower-manu-11.jpg,jetspower-manu-12.jpg,jetspower-manu-13.jpg,jetspower-manu-14.jpg,jetspower-manu-15.jpg'
+website: https://www.jetspower.com
 ---
 
 # About Marsi Carburetors

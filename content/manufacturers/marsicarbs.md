@@ -1,16 +1,17 @@
 ---
-title: "Marsi Carburetors"
-legalName: "Ningde Marsi Carburetors Co., Ltd."
-factoryAddress: "123 Industrial Park, Shanghai, China"
-shippingInfo: "Standard shipping: 5-10 business days; Express shipping: 3-5 business days"
-nearestPort: "Port of Shanghai"
+title: 'Marsi Carburetors'
+legalName: 'Ningde Marsi Carburetors Co., Ltd.'
+factoryAddress: '123 Industrial Park, Shanghai, China'
+shippingInfo: 'Standard shipping: 5-10 business days; Express shipping: 3-5 business days'
+nearestPort: 'Port of Shanghai'
 certificates:
-  - "ISO 9001"
-  - "CE Certification"
-  - "RoHS Compliance"
+    - 'ISO 9001'
+    - 'CE Certification'
+    - 'RoHS Compliance'
 handle: marsicarbs
-backgroundColor: "#0070f3"
+backgroundColor: '#0070f3'
 textColor: text-white
+website: https://marsicarbs.com
 ---
 
 # About Marsi Carburetors
