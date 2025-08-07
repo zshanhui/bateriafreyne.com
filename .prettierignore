@@ -1,0 +1,19 @@
+# Markdown files
+*.md
+
+# Documentation files
+**/*.md
+
+# README files
+README.md
+readme.md
+
+# License files
+LICENSE.md
+license.md
+
+# Local notes
+local-notes.md
+
+# Content markdown files
+content/**/*.md

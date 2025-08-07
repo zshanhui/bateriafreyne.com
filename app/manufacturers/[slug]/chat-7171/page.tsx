@@ -1,41 +1,68 @@
-"use client";
-import { useState } from "react";
+import { getManufacturerFrontPage } from 'lib/shopify';
+import { notFound } from 'next/navigation';
+import { ChatInterface } from './chat-interface';
 
-export default function ChatPage() {
-  const [message, setMessage] = useState("");
+export default async function ChatPage({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params;
+    const manufacturer = getManufacturerFrontPage(slug);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle chat message submission here
-    console.log("Message sent:", message);
-    setMessage("");
-  };
+    if (!manufacturer || !manufacturer.frontmatter) {
+        return notFound();
+    }
 
-  return (
-    <div className="min-h-screen p-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow p-4">
-          {/* Chat messages would go here */}
-          <div className="min-h-[400px]"></div>
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+            {/* Manufacturer Header */}
+            <div className="border-b border-gray-700 bg-gray-900/80 shadow-lg backdrop-blur-sm">
+                <div className="mx-auto max-w-4xl px-4 py-4">
+                    <div className="flex items-center space-x-4">
+                        <div className="flex-shrink-0">
+                            <img
+                                src={manufacturer.frontmatter.logoImage}
+                                alt={`${manufacturer.frontmatter.title} logo`}
+                                className="h-12 w-12 object-contain"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <h1 className="text-xl font-semibold text-gray-100">
+                                {manufacturer.frontmatter.title}
+                            </h1>
+                            <p className="text-sm text-gray-400">
+                                Chat with our AI sales assistant
+                            </p>
+                        </div>
+                        <div className="flex-shrink-0">
+                            <div className="flex items-center space-x-2">
+                                <div className="h-3 w-3 rounded-full bg-green-400 shadow-lg shadow-green-400/50"></div>
+                                <span className="text-sm text-gray-300">
+                                    Online
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-          {/* Chat input form */}
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              Send
-            </button>
-          </form>
+            {/* Chat Interface */}
+            <div className="mx-auto max-w-4xl px-4 py-6">
+                <ChatInterface manufacturer={manufacturer} />
+            </div>
+
+            {/* Footer */}
+            <div className="mx-auto max-w-4xl px-4 pb-6">
+                <div className="text-center">
+                    <p className="text-sm text-gray-500">
+                        Powered by{' '}
+                        <span className="font-semibold text-gray-400">
+                            23Kuajing Technologies
+                        </span>
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
