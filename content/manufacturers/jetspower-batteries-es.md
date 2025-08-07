@@ -14,6 +14,7 @@ textColor: text-grey-200
 banner_image: placeholder-banner.jpg
 logoImage: https://soppaekplyccyhrfkauf.supabase.co/storage/v1/object/public/manufacturers//jetspower-logo.png
 images: 'jetspower-manu-01.jpg,jetspower-manu-02.jpg,jetspower-manu-03.jpg,jetspower-manu-04.jpg,jetspower-manu-05.jpg,jetspower-manu-06.jpg,jetspower-manu-07.jpg,jetspower-manu-08.jpg,jetspower-manu-09.jpg,jetspower-manu-10.jpg,jetspower-manu-11.jpg,jetspower-manu-12.jpg,jetspower-manu-13.jpg,jetspower-manu-14.jpg,jetspower-manu-15.jpg'
+certificationImages: 'jetspower-CE-100AH.jpg,jetspower-CE.jpg,jetspower-iso9001.jpg,jetspower-ROHS.jpg,jetspower-UN38.3.jpg'
 website: https://www.jetspower.com
 ---
 
