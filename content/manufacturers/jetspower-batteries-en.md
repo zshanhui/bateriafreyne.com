@@ -23,7 +23,7 @@ website: https://www.jetspower.com
 Jetspower is a Factory Direct brand for lithium-ion batteries for materials handling equipment such as electric forklifts, electric aerial work platforms, electric pallet jack, electric tow tractors, electric order pickers. The brands manufacturing is based in Xuzhou, Jiangsu Province, China which is known for it's sustainable energy industry. Jetspower manufactures it's own lithium ion battery cells, modules, and packs. There are strict quality assurance checks and protocols to ensure low defect rates.
 
 Primary factory address:
-Xuzhou, Jiangsu National Hi-Tech Industrial Development Zone
+#12 Kangping Rd. Xuzhou National Hi-Tech Industrial Development Zone, Jiangsu Province, China
 
 ## Our Products
 

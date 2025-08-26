@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import clsx from 'clsx';
 import { getManufacturerFrontPage } from 'lib/shopify';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ImageDisplay } from './image-display';
 
@@ -144,9 +145,12 @@ export default async function Page(props: {
                                 <button className="cursor-pointer rounded-lg bg-gradient-to-r from-cyan-400 to-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-cyan-500 hover:to-blue-600 hover:shadow-xl">
                                     View Products
                                 </button>
-                                <button className="cursor-pointer rounded-lg bg-gradient-to-r from-pink-400 to-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-pink-500 hover:to-purple-600 hover:shadow-xl">
+                                <Link
+                                    href={`/manufacturers/${params.slug}/chat-7171`}
+                                    className="cursor-pointer rounded-lg bg-gradient-to-r from-pink-400 to-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-pink-500 hover:to-purple-600 hover:shadow-xl"
+                                >
                                     Chat with Agent
-                                </button>
+                                </Link>
                             </div>
                         </section>
                     </div>
