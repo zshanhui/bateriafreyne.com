@@ -39,5 +39,10 @@ next-env.d.ts
 .env*.local
 
 research/
+dev-notes.md
 local-notes.md
 prds/
+
+content/knowledge-base/
+
+devpg/
