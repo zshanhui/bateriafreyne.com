@@ -420,14 +420,11 @@ export default function CalculatorClient({
                                 )}
                             </strong>
                         </p>
-                        <p className="text-lg font-semibold text-green-600">
-                            Difference: Lithium saves you{' '}
-                            {formatCurrency(
-                                results.leadAcidInitialInvestment -
-                                    results.lithiumInitialInvestment
-                            )}{' '}
-                            in upfront costs
-                        </p>
+                        <DifferenceDisplay
+                            leadAcidCost={results.leadAcidInitialInvestment}
+                            lithiumCost={results.lithiumInitialInvestment}
+                            category="upfront costs"
+                        />
                     </div>
                 </div>
 
@@ -445,7 +442,7 @@ export default function CalculatorClient({
                         </p>
                         <p className="ml-4 text-neutral-700">
                             Replacement Cost = {inputs.numberOfForklifts}{' '}
-                            batteries ×{' '}
+                            batteries × 50% ×{' '}
                             {formatCurrency(inputs.leadAcidBatteryCost)}/battery
                             ={' '}
                             <strong>
@@ -466,11 +463,11 @@ export default function CalculatorClient({
                                 {formatCurrency(results.lithiumReplacementCost)}
                             </strong>
                         </p>
-                        <p className="text-lg font-semibold text-green-600">
-                            Difference: Lithium saves{' '}
-                            {formatCurrency(results.leadAcidReplacementCost)} in
-                            replacement costs.
-                        </p>
+                        <DifferenceDisplay
+                            leadAcidCost={results.leadAcidReplacementCost}
+                            lithiumCost={results.lithiumReplacementCost}
+                            category="replacement costs"
+                        />
                     </div>
                 </div>
 
@@ -552,14 +549,11 @@ export default function CalculatorClient({
                                 {formatCurrency(results.lithiumEnergyCost)}
                             </strong>
                         </p>
-                        <p className="text-lg font-semibold text-green-600">
-                            Difference: Lithium LFP saves{' '}
-                            {formatCurrency(
-                                results.leadAcidEnergyCost -
-                                    results.lithiumEnergyCost
-                            )}{' '}
-                            in energy costs over 5 years.
-                        </p>
+                        <DifferenceDisplay
+                            leadAcidCost={results.leadAcidEnergyCost}
+                            lithiumCost={results.lithiumEnergyCost}
+                            category="energy costs over 5 years"
+                        />
                     </div>
                 </div>
 
@@ -592,11 +586,11 @@ export default function CalculatorClient({
                                 {formatCurrency(results.lithiumMaintenanceCost)}
                             </strong>
                         </p>
-                        <p className="text-lg font-semibold text-green-600">
-                            Difference: Lithium saves{' '}
-                            {formatCurrency(results.leadAcidMaintenanceCost)} in
-                            maintenance costs.
-                        </p>
+                        <DifferenceDisplay
+                            leadAcidCost={results.leadAcidMaintenanceCost}
+                            lithiumCost={results.lithiumMaintenanceCost}
+                            category="maintenance costs"
+                        />
                     </div>
                 </div>
 
@@ -652,11 +646,11 @@ export default function CalculatorClient({
                                 {formatCurrency(results.lithiumLaborCost)}
                             </strong>
                         </p>
-                        <p className="text-lg font-semibold text-green-600">
-                            Difference: Lithium saves{' '}
-                            {formatCurrency(results.leadAcidLaborCost)} in
-                            swapping labor costs
-                        </p>
+                        <DifferenceDisplay
+                            leadAcidCost={results.leadAcidLaborCost}
+                            lithiumCost={results.lithiumLaborCost}
+                            category="swapping labor costs"
+                        />
                     </div>
                 </div>
 
@@ -700,7 +694,16 @@ export default function CalculatorClient({
                                             results.lithiumInitialInvestment
                                         )}
                                     </td>
-                                    <td className="border border-neutral-300 px-4 py-2 text-right text-green-600">
+                                    <td
+                                        className={
+                                            'border border-neutral-300 px-4 py-2 text-right ' +
+                                            (results.leadAcidInitialInvestment -
+                                                results.lithiumInitialInvestment <
+                                            0
+                                                ? 'text-red-800'
+                                                : 'text-green-600')
+                                        }
+                                    >
                                         {formatCurrency(
                                             results.leadAcidInitialInvestment -
                                                 results.lithiumInitialInvestment
@@ -908,5 +911,48 @@ export default function CalculatorClient({
                 </div>
             </div>
         </>
+    );
+}
+
+interface DifferenceDisplayProps {
+    leadAcidCost: number;
+    lithiumCost: number;
+    category: string;
+    className?: string;
+}
+
+function DifferenceDisplay({
+    leadAcidCost,
+    lithiumCost,
+    category,
+    className = '',
+}: DifferenceDisplayProps) {
+    const difference = leadAcidCost - lithiumCost;
+    const isPositive = difference > 0;
+    const isNegative = difference < 0;
+    const isZero = difference === 0;
+
+    const getTextColor = () => {
+        if (isNegative) return 'text-red-800';
+        if (isPositive) return 'text-green-600';
+        return 'text-neutral-600';
+    };
+
+    const getMessage = () => {
+        if (isZero) {
+            return `Difference: No cost difference in ${category}`;
+        }
+
+        if (isNegative) {
+            return `Lithium costs $${Math.abs(difference).toLocaleString()} more in ${category}`;
+        }
+
+        return `Difference: Lithium saves you $${difference.toLocaleString()} in ${category}`;
+    };
+
+    return (
+        <p className={`text-lg font-semibold ${getTextColor()} ${className}`}>
+            {getMessage()}
+        </p>
     );
 }
