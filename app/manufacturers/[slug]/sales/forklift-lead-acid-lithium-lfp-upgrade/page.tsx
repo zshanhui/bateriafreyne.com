@@ -1,8 +1,6 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 
-export const metadata: Metadata = {
+export const metadata = {
     title: 'Lead-Acid to Lithium (LFP) Battery Upgrade',
     description:
         'Upgrade from lead-acid to lithium (LFP) batteries: reduce TCO by half, eliminate maintenance costs, and achieve 100% fleet availability. Get your quote today.',
@@ -28,7 +26,7 @@ export default async function LeadAcidToLithiumUpgradePage({
 }: PageParams) {
     const { slug } = await params;
     if (!slug.includes('jetspower-batteries')) {
-        return notFound?.() ?? null;
+        return null;
     }
 
     return (

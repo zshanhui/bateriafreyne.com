@@ -11,10 +11,10 @@ certificates:
 handle: jetspower-batteries
 backgroundColor: '#ffffff'
 textColor: text-grey-200
-banner_image: placeholder-banner.jpg
-logoImage: https://soppaekplyccyhrfkauf.supabase.co/storage/v1/object/public/manufacturers//jetspower-logo.png
-images: 'jetspower-manu-01.jpg,jetspower-manu-02.jpg,jetspower-manu-03.jpg,jetspower-manu-04.jpg,jetspower-manu-05.jpg,jetspower-manu-06.jpg,jetspower-manu-07.jpg,jetspower-manu-08.jpg,jetspower-manu-09.jpg,jetspower-manu-10.jpg,jetspower-manu-11.jpg,jetspower-manu-12.jpg,jetspower-manu-13.jpg,jetspower-manu-14.jpg,jetspower-manu-15.jpg'
-certificationImages: 'jetspower-CE-100AH.jpg,jetspower-CE.jpg,jetspower-iso9001.jpg,jetspower-ROHS.jpg,jetspower-UN38.3.jpg'
+bannerImage: https://omo-oss-image.thefastimg.com/portal-saas/new2023051518493580026/cms/image/46cc85da-051b-4cf7-83d8-8e99dc754744.jpg
+logoImage: https://soppaekplyccyhrfkauf.supabase.co/storage/v1/object/public/manufacturers//jetspower/logo.png
+images: 'jetspower/factory01.jpg,jetspower/factory02.jpg,jetspower/factory03.jpg,jetspower/factory04.jpg,jetspower/factory05.jpg,jetspower/factory06.jpg,jetspower/factory07.jpg,jetspower/factory08.jpg,jetspower/factory09.jpg,jetspower/factory10.jpg,jetspower/factory11.jpg,jetspower/factory12.jpg,jetspower/factory13.jpg,jetspower/factory14.jpg,jetspower/factory15.jpg'
+certificationImages: 'jetspower/CE-100AH.jpg,jetspower/CE.jpg,jetspower/iso9001.jpg,jetspower/ROHS.jpg,jetspower/UN38.3.jpg'
 website: https://www.jetspower.com
 ---
 

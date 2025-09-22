@@ -13,8 +13,7 @@ export async function generateMetadata(props: {
     const page = getManufacturerFrontPage(params.slug);
 
     if (!page) return notFound();
-
-    console.log('manufacturer page contents >> ', page);
+    // console.log('manufacturer page contents >> ', page);
 
     return {
         // title: page.seo?.title || page.title,
@@ -38,16 +37,18 @@ export default async function Page(props: {
         return notFound();
     }
 
-    console.log('page.content >> ', page.content);
+    // console.log('page.content >> ', page.content);
     return (
         <div className="w-full">
             {/* Banner Image */}
             <div className="relative h-44 w-full overflow-hidden bg-gradient-to-r from-blue-500 to-purple-600">
-                <img
-                    src="https://omo-oss-image.thefastimg.com/portal-saas/new2023051518493580026/cms/image/46cc85da-051b-4cf7-83d8-8e99dc754744.jpg"
-                    alt="Manufacturer Banner"
-                    className="h-full w-full object-cover"
-                />
+                {page.frontmatter.bannerImage && (
+                    <img
+                        src={page.frontmatter.bannerImage}
+                        alt="Manufacturer Banner"
+                        className="h-full w-full object-cover"
+                    />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700 opacity-60"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                     <h1 className="px-4 text-center text-4xl font-bold text-white">
@@ -143,7 +144,7 @@ export default async function Page(props: {
                         <section className="cta2 flex w-full items-center justify-center p-6 lg:w-1/3">
                             <div className="flex gap-3">
                                 <button className="cursor-pointer rounded-lg bg-gradient-to-r from-cyan-400 to-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-cyan-500 hover:to-blue-600 hover:shadow-xl">
-                                    View Products
+                                    View Catalog
                                 </button>
                                 <Link
                                     href={`/manufacturers/${params.slug}/chat-7171`}
@@ -177,6 +178,7 @@ export default async function Page(props: {
                         <div className="w-full lg:w-1/2">
                             <ImageDisplay
                                 images={page.frontmatter.images || []}
+                                logoImage={page.frontmatter.logoImage}
                             />
                         </div>
                     </div>
