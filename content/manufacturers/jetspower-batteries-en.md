@@ -5,9 +5,9 @@ factoryAddress: '#12 Kangping Rd. Xuzhou National Hi-Tech Industrial Development
 shippingInfo: 'Ocean freight, 22 to 38 days from Shanghai or Shenzhen Port'
 nearestPort: 'Port of Shanghai'
 certificates:
-    - 'ISO 9001'
-    - 'CE Certification'
-    - 'RoHS Compliance'
+  - 'ISO 9001'
+  - 'CE Certification'
+  - 'RoHS Compliance'
 handle: jetspower-batteries
 backgroundColor: '#ffffff'
 textColor: text-grey-200
@@ -16,6 +16,8 @@ logoImage: https://soppaekplyccyhrfkauf.supabase.co/storage/v1/object/public/man
 images: 'jetspower/factory01.jpg,jetspower/factory02.jpg,jetspower/factory03.jpg,jetspower/factory04.jpg,jetspower/factory05.jpg,jetspower/factory06.jpg,jetspower/factory07.jpg,jetspower/factory08.jpg,jetspower/factory09.jpg,jetspower/factory10.jpg,jetspower/factory11.jpg,jetspower/factory12.jpg,jetspower/factory13.jpg,jetspower/factory14.jpg,jetspower/factory15.jpg'
 certificationImages: 'jetspower/CE-100AH.jpg,jetspower/CE.jpg,jetspower/iso9001.jpg,jetspower/ROHS.jpg,jetspower/UN38.3.jpg'
 website: https://www.jetspower.com
+contactEmail:
+  - 'vivian.t@jetspower.com'
 ---
 
 # About Jetspower LFP Forklift Batteries

@@ -14,8 +14,11 @@ bannerImage: https://antwell.com/wp-content/uploads/2024/12/c0f350a408794392b2bf
 images: 'antwell-manu-01.jpg,antwell-manu-02.jpg,antwell-manu-03.jpg'
 certificationImages: 'antwell-CE-100AH.jpg,antwell-CE.jpg,antwell-iso9001.jpg,antwell-ROHS.jpg,antwell-UN38.3.jpg'
 website: https://www.antwell.com
-companyCategory: manufacturer
+companyType: manufacturer, factory direct brand
 published: true
+contactEmail:
+  - 'sujie.guo@antwell.com'
+  - 'ant2004@antwell.com'
 ---
 
 # About Antwell Forklift Attachments
