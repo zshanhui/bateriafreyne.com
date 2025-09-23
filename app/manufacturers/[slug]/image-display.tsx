@@ -4,9 +4,15 @@ import { useCallback, useRef, useState } from 'react';
 const supaBaseImageRoot =
     'https://soppaekplyccyhrfkauf.supabase.co/storage/v1/object/public/manufacturers/';
 
-export const ImageDisplay = ({ images }: { images: string[] }) => {
+export const ImageDisplay = ({
+    images,
+    logoImage,
+}: {
+    images: string[];
+    logoImage?: string;
+}) => {
     const [selectedImage, setSelectedImage] = useState(images[0]);
-    console.log('images >> ', images);
+    // console.log('[DEV] images >> ', images);
 
     const [showLeftShadow, setShowLeftShadow] = useState(false);
     const [showRightShadow, setShowRightShadow] = useState(true);
@@ -77,7 +83,13 @@ export const ImageDisplay = ({ images }: { images: string[] }) => {
                     height={600}
                     onError={e => {
                         const target = e.target as HTMLImageElement;
-                        target.src = 'https://placecats.com/300/200';
+                        if (logoImage) {
+                            target.src = logoImage;
+                            target.className =
+                                'max-h-1/2 max-w-1/2 rounded-lg border-2 border-gray-200 shadow-md bg-gray-200 object-contain p-4';
+                        } else {
+                            target.src = 'https://placecats.com/300/200';
+                        }
                     }}
                 />
             </div>
@@ -109,8 +121,14 @@ export const ImageDisplay = ({ images }: { images: string[] }) => {
                                     onError={e => {
                                         const target =
                                             e.target as HTMLImageElement;
-                                        target.src =
-                                            'https://placecats.com/300/200';
+                                        if (logoImage) {
+                                            target.src = logoImage;
+                                            target.className =
+                                                'max-h-full max-w-full rounded-sm object-contain bg-gray-200 p-2';
+                                        } else {
+                                            target.src =
+                                                'https://placecats.com/300/200';
+                                        }
                                     }}
                                 />
                             </button>
