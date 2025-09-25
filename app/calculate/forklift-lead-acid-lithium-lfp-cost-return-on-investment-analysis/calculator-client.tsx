@@ -31,6 +31,60 @@ interface CalculatorResults {
     totalSavings: number;
 }
 
+const texts = {
+    inputs: {
+        title: 'Variables de entrada/Supuestos (Ajuste según sus propios números)',
+        labels: {
+            numberOfForklifts: 'Número de montacargas',
+            shiftsPerDay: 'Turnos por día',
+            daysPerWeek: 'Días por semana',
+            weeksPerYear: 'Semanas por año',
+            leadAcidBatteryCost: 'Costo de batería de plomo-ácido',
+            lithiumBatteryCost: 'Costo de batería de litio (LFP)',
+            electricityRate: 'Tarifa de electricidad',
+            laborCost: 'Costo de mano de obra',
+            forkliftPowerConsumption: 'Consumo de energía del montacargas',
+        },
+        helpers: {
+            perBatteryNote: 'Por batería (incluye intercambio de núcleo)',
+            includesCharger: 'Incluye cargador especializado',
+            perKwh: 'Por kWh',
+            perShiftNote:
+                'Por turno (promedio para capacidad de 3,000-4,000 lb)',
+        },
+    },
+    tco: {
+        title: 'Desglose del costo total de propiedad (TCO) a 5 años',
+        tableHeaders: {
+            costCategory: 'Categoría de costo',
+            leadAcid: 'Plomo-ácido',
+            lithium: 'Litio (LFP)',
+            savings: 'Ahorros con Litio',
+        },
+        rowLabels: {
+            initialInvestment: '1. Inversión inicial',
+            batteryReplacement: '2. Reemplazo de baterías',
+            energyCost: '3. Costo de energía',
+            maintenance: '4. Mantenimiento',
+            labor: '5. Mano de obra (cambio)',
+            total5YearCost: 'Costo total a 5 años',
+        },
+    },
+    netSavings: {
+        title: 'Ahorro neto a 5 años con Litio LFP',
+        forForklifts: 'para',
+        forklifts: 'montacargas',
+    },
+    difference: {
+        zero: (category: string) =>
+            `Diferencia: No hay diferencia de costo en ${category}`,
+        negative: (amount: string, category: string) =>
+            `El litio cuesta $${amount} más en ${category}`,
+        positive: (amount: string, category: string) =>
+            `Diferencia: El litio le ahorra $${amount} en ${category}`,
+    },
+};
+
 export default function CalculatorClient({
     initialInputs,
 }: {
@@ -153,26 +207,25 @@ export default function CalculatorClient({
         <>
             <div className="mb-8">
                 <h2 className="mb-6 text-2xl font-semibold text-neutral-800">
-                    Input Variables/Assumptions (Adjust based on your own
-                    numbers)
+                    {texts.inputs.title}
                 </h2>
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Number of Forklifts
+                                {texts.inputs.labels.numberOfForklifts}
                             </label>
                             <input
                                 type="number"
-                                value={inputs.numberOfForklifts}
-                                onChange={e =>
+                                defaultValue={inputs.numberOfForklifts}
+                                onBlur={e =>
                                     handleInputChange(
                                         'numberOfForklifts',
                                         Number(e.target.value)
                                     )
                                 }
-                                className="w-24 rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                className="w-24 appearance-none rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                 min={1}
                             />
                         </div>
@@ -184,18 +237,18 @@ export default function CalculatorClient({
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Shifts per Day
+                                {texts.inputs.labels.shiftsPerDay}
                             </label>
                             <input
                                 type="number"
-                                value={inputs.shiftsPerDay}
-                                onChange={e =>
+                                defaultValue={inputs.shiftsPerDay}
+                                onBlur={e =>
                                     handleInputChange(
                                         'shiftsPerDay',
                                         Number(e.target.value)
                                     )
                                 }
-                                className="w-24 rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                className="w-24 appearance-none rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                 min={1}
                                 max={3}
                             />
@@ -205,18 +258,18 @@ export default function CalculatorClient({
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Days per Week
+                                {texts.inputs.labels.daysPerWeek}
                             </label>
                             <input
                                 type="number"
-                                value={inputs.daysPerWeek}
-                                onChange={e =>
+                                defaultValue={inputs.daysPerWeek}
+                                onBlur={e =>
                                     handleInputChange(
                                         'daysPerWeek',
                                         Number(e.target.value)
                                     )
                                 }
-                                className="w-24 rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                className="w-24 appearance-none rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                 min={1}
                                 max={7}
                             />
@@ -226,18 +279,18 @@ export default function CalculatorClient({
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Weeks per Year
+                                {texts.inputs.labels.weeksPerYear}
                             </label>
                             <input
                                 type="number"
-                                value={inputs.weeksPerYear}
-                                onChange={e =>
+                                defaultValue={inputs.weeksPerYear}
+                                onBlur={e =>
                                     handleInputChange(
                                         'weeksPerYear',
                                         Number(e.target.value)
                                     )
                                 }
-                                className="w-24 rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                className="w-24 appearance-none rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                 min={1}
                                 max={52}
                             />
@@ -247,7 +300,7 @@ export default function CalculatorClient({
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Lead-Acid Battery Cost
+                                {texts.inputs.labels.leadAcidBatteryCost}
                             </label>
                             <div className="relative">
                                 <span className="absolute top-1 left-2 text-sm text-neutral-500">
@@ -255,27 +308,27 @@ export default function CalculatorClient({
                                 </span>
                                 <input
                                     type="number"
-                                    value={inputs.leadAcidBatteryCost}
-                                    onChange={e =>
+                                    defaultValue={inputs.leadAcidBatteryCost}
+                                    onBlur={e =>
                                         handleInputChange(
                                             'leadAcidBatteryCost',
                                             Number(e.target.value)
                                         )
                                     }
-                                    className="w-24 rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                    className="w-24 appearance-none rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                     min={0}
                                 />
                             </div>
                         </div>
                         <p className="text-xs text-neutral-500">
-                            Per battery (including core exchange)
+                            {texts.inputs.helpers.perBatteryNote}
                         </p>
                     </div>
 
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Lithium (LFP) Battery Cost
+                                {texts.inputs.labels.lithiumBatteryCost}
                             </label>
                             <div className="relative">
                                 <span className="absolute top-1 left-2 text-sm text-neutral-500">
@@ -283,27 +336,27 @@ export default function CalculatorClient({
                                 </span>
                                 <input
                                     type="number"
-                                    value={inputs.lithiumBatteryCost}
-                                    onChange={e =>
+                                    defaultValue={inputs.lithiumBatteryCost}
+                                    onBlur={e =>
                                         handleInputChange(
                                             'lithiumBatteryCost',
                                             Number(e.target.value)
                                         )
                                     }
-                                    className="w-24 rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                    className="w-24 appearance-none rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                     min={0}
                                 />
                             </div>
                         </div>
                         <p className="text-xs text-neutral-500">
-                            Includes specialized charger
+                            {texts.inputs.helpers.includesCharger}
                         </p>
                     </div>
 
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Electricity Rate
+                                {texts.inputs.labels.electricityRate}
                             </label>
                             <div className="relative">
                                 <span className="absolute top-1 left-2 text-sm text-neutral-500">
@@ -312,25 +365,27 @@ export default function CalculatorClient({
                                 <input
                                     type="number"
                                     step="0.01"
-                                    value={inputs.electricityRate}
-                                    onChange={e =>
+                                    defaultValue={inputs.electricityRate}
+                                    onBlur={e =>
                                         handleInputChange(
                                             'electricityRate',
                                             Number(e.target.value)
                                         )
                                     }
-                                    className="w-24 rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                    className="w-24 appearance-none rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                     min={0}
                                 />
                             </div>
                         </div>
-                        <p className="text-xs text-neutral-500">Per kWh</p>
+                        <p className="text-xs text-neutral-500">
+                            {texts.inputs.helpers.perKwh}
+                        </p>
                     </div>
 
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Labor Cost
+                                {texts.inputs.labels.laborCost}
                             </label>
                             <div className="relative">
                                 <span className="absolute top-1 left-2 text-sm text-neutral-500">
@@ -338,39 +393,41 @@ export default function CalculatorClient({
                                 </span>
                                 <input
                                     type="number"
-                                    value={inputs.laborCost}
-                                    onChange={e =>
+                                    defaultValue={inputs.laborCost}
+                                    onBlur={e =>
                                         handleInputChange(
                                             'laborCost',
                                             Number(e.target.value)
                                         )
                                     }
-                                    className="w-24 rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                    className="w-24 appearance-none rounded-md border border-neutral-300 py-1 pr-2 pl-6 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                     min={0}
                                 />
                             </div>
                         </div>
                         <p className="text-xs text-neutral-500">
-                            Per hour (including benefits & overhead)
+                            Por hora (incluye prestaciones y gastos generales)
                         </p>
                     </div>
 
                     <div className="space-y-2">
                         <div className="flex items-center justify-between">
                             <label className="text-sm font-medium text-neutral-700">
-                                Forklift Power Consumption
+                                {texts.inputs.labels.forkliftPowerConsumption}
                             </label>
                             <div className="relative">
                                 <input
                                     type="number"
-                                    value={inputs.forkliftPowerConsumption}
-                                    onChange={e =>
+                                    defaultValue={
+                                        inputs.forkliftPowerConsumption
+                                    }
+                                    onBlur={e =>
                                         handleInputChange(
                                             'forkliftPowerConsumption',
                                             Number(e.target.value)
                                         )
                                     }
-                                    className="w-24 rounded-md border border-neutral-300 px-2 py-1 pr-8 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                                    className="w-24 appearance-none rounded-md border border-neutral-300 px-2 py-1 pr-8 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                     min={0}
                                 />
                                 <span className="absolute top-1 right-2 text-sm text-neutral-500">
@@ -379,7 +436,7 @@ export default function CalculatorClient({
                             </div>
                         </div>
                         <p className="text-xs text-neutral-500">
-                            Per shift (avg for 3,000-4,000 lb capacity)
+                            {texts.inputs.helpers.perShiftNote}
                         </p>
                     </div>
                 </div>
@@ -387,24 +444,24 @@ export default function CalculatorClient({
 
             <div className="mb-8">
                 <h2 className="mb-6 text-2xl font-semibold text-neutral-800">
-                    5 Year Total Cost of Ownership (TCO) Breakdown
+                    {texts.tco.title}
                 </h2>
 
                 <div className="mb-6 rounded-lg bg-neutral-50 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-neutral-800">
-                        1. Upfront Capital Investment (Year 0)
+                        1. Inversión de capital inicial (Año 0)
                     </h3>
                     <div className="space-y-3">
                         <p className="text-neutral-700">
-                            <strong>Lead-Acid:</strong> You will need{' '}
-                            {inputs.shiftsPerDay} batteries per forklift to
-                            operate {inputs.shiftsPerDay} shifts (rotation while
-                            charging).
+                            <strong>Plomo-ácido:</strong> Necesitará{' '}
+                            {inputs.shiftsPerDay} baterías por montacargas para
+                            operar {inputs.shiftsPerDay} turnos (rotación
+                            mientras se cargan).
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            {inputs.numberOfForklifts} forklifts ×{' '}
-                            {inputs.shiftsPerDay} batteries/forklift ×{' '}
-                            {formatCurrency(inputs.leadAcidBatteryCost)}/battery
+                            {inputs.numberOfForklifts} montacargas ×{' '}
+                            {inputs.shiftsPerDay} baterías/montacargas ×{' '}
+                            {formatCurrency(inputs.leadAcidBatteryCost)}/batería
                             ={' '}
                             <strong>
                                 {formatCurrency(
@@ -413,14 +470,14 @@ export default function CalculatorClient({
                             </strong>
                         </p>
                         <p className="text-neutral-700">
-                            <strong>Lithium:</strong> You only need 1 battery
-                            per forklift as it charges during breaks and between
-                            shifts.
+                            <strong>Litio:</strong> Solo necesita 1 batería por
+                            montacargas ya que se carga durante los descansos y
+                            entre turnos.
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            {inputs.numberOfForklifts} forklifts × 1
-                            battery/forklift ×{' '}
-                            {formatCurrency(inputs.lithiumBatteryCost)}/battery
+                            {inputs.numberOfForklifts} montacargas × 1
+                            batería/montacargas ×{' '}
+                            {formatCurrency(inputs.lithiumBatteryCost)}/batería
                             ={' '}
                             <strong>
                                 {formatCurrency(
@@ -431,39 +488,39 @@ export default function CalculatorClient({
                         <DifferenceDisplay
                             leadAcidCost={results.leadAcidInitialInvestment}
                             lithiumCost={results.lithiumInitialInvestment}
-                            category="upfront costs"
+                            category="costos iniciales"
                         />
                     </div>
                 </div>
 
                 <div className="mb-6 rounded-lg bg-neutral-50 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-neutral-800">
-                        2. Battery Replacement Costs
+                        2. Costos de reemplazo de baterías
                     </h3>
                     <div className="space-y-3">
                         <p className="text-neutral-700">
-                            <strong>Lead-Acid:</strong> Lifespan is ~5 years or
-                            1,500 cycles. In our 2-shift model, they are cycled
-                            heavily and will likely need replacement once during
-                            this 5-year period. Let's say 50% of them need
-                            replacement.
+                            <strong>Plomo-ácido:</strong> Vida útil ~5 años o
+                            1,500 ciclos. En nuestro modelo de 2 turnos, se
+                            ciclan con frecuencia y probablemente necesiten un
+                            reemplazo durante este periodo de 5 años. Supongamos
+                            que el 50% requiere reemplazo.
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            Replacement Cost = {inputs.numberOfForklifts}{' '}
-                            batteries × 50% ×{' '}
-                            {formatCurrency(inputs.leadAcidBatteryCost)}/battery
+                            Costo de reemplazo = {inputs.numberOfForklifts}{' '}
+                            baterías × 50% ×{' '}
+                            {formatCurrency(inputs.leadAcidBatteryCost)}/batería
                             ={' '}
                             <strong>
                                 {formatCurrency(
                                     results.leadAcidReplacementCost
                                 )}
                             </strong>{' '}
-                            (incurred around year 3)
+                            (ocurre aproximadamente en el año 3)
                         </p>
                         <p className="text-neutral-700">
-                            <strong>Lithium:</strong> Lifespan is ~5,000 cycles.
-                            It will easily last the entire 5-year period without
-                            replacement.
+                            <strong>Litio:</strong> Vida útil ~5,000 ciclos.
+                            Durará fácilmente todo el período de 5 años sin
+                            reemplazo.
                         </p>
                         <p className="ml-4 text-neutral-700">
                             Replacement Cost ={' '}
@@ -474,27 +531,27 @@ export default function CalculatorClient({
                         <DifferenceDisplay
                             leadAcidCost={results.leadAcidReplacementCost}
                             lithiumCost={results.lithiumReplacementCost}
-                            category="replacement costs"
+                            category="costos de reemplazo"
                         />
                     </div>
                 </div>
 
                 <div className="mb-6 rounded-lg bg-neutral-50 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-neutral-800">
-                        3. Energy & Electricity Costs
+                        3. Costos de energía y electricidad
                     </h3>
                     <div className="space-y-3">
                         <p className="text-neutral-700">
-                            <strong>Lead-Acid:</strong> ~75% efficient. It uses
-                            more electricity to charge due to heat and gas
-                            generation.
+                            <strong>Plomo-ácido:</strong> ~75% de eficiencia.
+                            Consume más electricidad al cargar por calor y
+                            generación de gas.
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            Annual kWh Usage = ({inputs.numberOfForklifts}{' '}
-                            forklifts × {inputs.shiftsPerDay} shifts ×{' '}
-                            {inputs.forkliftPowerConsumption} kWh/shift ×{' '}
-                            {inputs.daysPerWeek * inputs.weeksPerYear} days) ÷
-                            0.75 efficiency ={' '}
+                            Consumo anual (kWh) = ({inputs.numberOfForklifts}{' '}
+                            montacargas × {inputs.shiftsPerDay} turnos ×{' '}
+                            {inputs.forkliftPowerConsumption} kWh/turno ×{' '}
+                            {inputs.daysPerWeek * inputs.weeksPerYear} días) ÷
+                            0.75 de eficiencia ={' '}
                             {(
                                 (inputs.numberOfForklifts *
                                     inputs.shiftsPerDay *
@@ -515,22 +572,22 @@ export default function CalculatorClient({
                                     inputs.weeksPerYear) /
                                 0.75
                             ).toLocaleString()}{' '}
-                            kWh/year × {formatCurrency(inputs.electricityRate)}
-                            /kWh × 5 years ={' '}
+                            kWh/año × {formatCurrency(inputs.electricityRate)}
+                            /kWh × 5 años ={' '}
                             <strong>
                                 {formatCurrency(results.leadAcidEnergyCost)}
                             </strong>
                         </p>
                         <p className="text-neutral-700">
-                            <strong>Lithium:</strong> More than 95% efficient,
-                            up to 99%
+                            <strong>Litio:</strong> Más del 95% de eficiencia,
+                            hasta el 99%
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            Annual kWh Usage = ({inputs.numberOfForklifts}{' '}
-                            forklifts × {inputs.shiftsPerDay} shifts ×{' '}
-                            {inputs.forkliftPowerConsumption} kWh/shift ×{' '}
-                            {inputs.daysPerWeek * inputs.weeksPerYear} days) ÷
-                            0.95 efficiency ={' '}
+                            Consumo anual (kWh) = ({inputs.numberOfForklifts}{' '}
+                            montacargas × {inputs.shiftsPerDay} turnos ×{' '}
+                            {inputs.forkliftPowerConsumption} kWh/turno ×{' '}
+                            {inputs.daysPerWeek * inputs.weeksPerYear} días) ÷
+                            0.95 de eficiencia ={' '}
                             {(
                                 (inputs.numberOfForklifts *
                                     inputs.shiftsPerDay *
@@ -551,8 +608,8 @@ export default function CalculatorClient({
                                     inputs.weeksPerYear) /
                                 0.95
                             ).toLocaleString()}{' '}
-                            kWh/year × {formatCurrency(inputs.electricityRate)}
-                            /kWh × 5 years ={' '}
+                            kWh/año × {formatCurrency(inputs.electricityRate)}
+                            /kWh × 5 años ={' '}
                             <strong>
                                 {formatCurrency(results.lithiumEnergyCost)}
                             </strong>
@@ -560,24 +617,24 @@ export default function CalculatorClient({
                         <DifferenceDisplay
                             leadAcidCost={results.leadAcidEnergyCost}
                             lithiumCost={results.lithiumEnergyCost}
-                            category="energy costs over 5 years"
+                            category="costos de energía en 5 años"
                         />
                     </div>
                 </div>
 
                 <div className="mb-6 rounded-lg bg-neutral-50 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-neutral-800">
-                        4. Maintenance & Watering Costs
+                        4. Costos de mantenimiento y riego
                     </h3>
                     <div className="space-y-3">
                         <p className="text-neutral-700">
-                            <strong>Lead-Acid:</strong> Requires regular
-                            watering and cleaning. Estimate ~$200 per battery
-                            per year in maintenance labour, and additives.
+                            <strong>Plomo-ácido:</strong> Requiere riego y
+                            limpieza regular. Estime ~$200 por batería al año en
+                            mano de obra de mantenimiento y aditivos.
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            {inputs.numberOfForklifts * 2} batteries ×
-                            $200/battery/year × 5 years ={' '}
+                            {inputs.numberOfForklifts * 2} baterías ×
+                            $200/batería/año × 5 años ={' '}
                             <strong>
                                 {formatCurrency(
                                     results.leadAcidMaintenanceCost
@@ -585,8 +642,8 @@ export default function CalculatorClient({
                             </strong>
                         </p>
                         <p className="text-neutral-700">
-                            <strong>Lithium:</strong> Effectively zero
-                            maintenance (normal conditions)
+                            <strong>Litio:</strong> Efectivamente cero
+                            mantenimiento (condiciones normales)
                         </p>
                         <p className="ml-4 text-neutral-700">
                             5-Year Maintenance Cost ={' '}
@@ -597,26 +654,26 @@ export default function CalculatorClient({
                         <DifferenceDisplay
                             leadAcidCost={results.leadAcidMaintenanceCost}
                             lithiumCost={results.lithiumMaintenanceCost}
-                            category="maintenance costs"
+                            category="costos de mantenimiento"
                         />
                     </div>
                 </div>
 
                 <div className="mb-6 rounded-lg bg-neutral-50 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-neutral-800">
-                        5. Labour Cost for Battery Swapping
+                        5. Costo de mano de obra por cambio de baterías
                     </h3>
                     <div className="space-y-3">
                         <p className="text-neutral-700">
-                            This is a major often hidden, cost.
+                            Este es un costo importante y a menudo oculto.
                         </p>
                         <p className="text-neutral-700">
-                            <strong>Lead-Acid:</strong> Each battery swap takes
-                            ~15 minutes (including travel to/from the charging
-                            room). 2 swaps per forklift per day.
+                            <strong>Plomo-ácido:</strong> Cada cambio toma ~15
+                            minutos (incluido el traslado hacia/desde la sala de
+                            carga). 2 cambios por montacargas por día.
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            Annual Labour Hours ={' '}
+                            Horas de mano de obra anuales ={' '}
                             {(
                                 (inputs.numberOfForklifts *
                                     inputs.shiftsPerDay *
@@ -625,10 +682,10 @@ export default function CalculatorClient({
                                     15) /
                                 60
                             ).toLocaleString()}{' '}
-                            hours
+                            horas
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            5-Year Hidden Labour Cost ={' '}
+                            Costo oculto de mano de obra a 5 años ={' '}
                             {(
                                 (inputs.numberOfForklifts *
                                     inputs.shiftsPerDay *
@@ -637,19 +694,19 @@ export default function CalculatorClient({
                                     15) /
                                 60
                             ).toLocaleString()}{' '}
-                            hours/year × {formatCurrency(inputs.laborCost)}/hour
-                            × 5 years ={' '}
+                            horas/año × {formatCurrency(inputs.laborCost)}/hora
+                            × 5 años ={' '}
                             <strong>
                                 {formatCurrency(results.leadAcidLaborCost)}
                             </strong>
                         </p>
                         <p className="text-neutral-700">
-                            <strong>Lithium:</strong> No battery swapping. The
-                            operator plugs in the truck themselves during a
-                            break (opportunity charging).
+                            <strong>Litio:</strong> Sin cambio de baterías. El
+                            operador conecta el montacargas durante la pausa
+                            (carga de oportunidad).
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            5-Year Labour Cost ={' '}
+                            Costo de mano de obra a 5 años ={' '}
                             <strong>
                                 {formatCurrency(results.lithiumLaborCost)}
                             </strong>
@@ -657,16 +714,16 @@ export default function CalculatorClient({
                         <DifferenceDisplay
                             leadAcidCost={results.leadAcidLaborCost}
                             lithiumCost={results.lithiumLaborCost}
-                            category="swapping labor costs"
+                            category="costos de mano de obra por cambios"
                         />
                     </div>
                 </div>
 
                 <div className="mb-8">
                     <h3 className="mb-4 text-xl font-semibold text-neutral-800">
-                        The 5-Year Cost Estimate Summary for{' '}
-                        {inputs.numberOfForklifts} Forklifts: Lithium vs.
-                        Lead-Acid
+                        Resumen de costos a 5 años para{' '}
+                        {inputs.numberOfForklifts} montacargas: Litio vs.
+                        Plomo-ácido
                     </h3>
 
                     <div className="overflow-x-auto">
@@ -674,23 +731,23 @@ export default function CalculatorClient({
                             <thead>
                                 <tr className="bg-neutral-100">
                                     <th className="border border-neutral-300 px-4 py-2 text-left font-semibold">
-                                        Cost Category
+                                        {texts.tco.tableHeaders.costCategory}
                                     </th>
                                     <th className="border border-neutral-300 px-4 py-2 text-right font-semibold">
-                                        Lead-Acid
+                                        {texts.tco.tableHeaders.leadAcid}
                                     </th>
                                     <th className="border border-neutral-300 px-4 py-2 text-right font-semibold">
-                                        Lithium (LFP)
+                                        {texts.tco.tableHeaders.lithium}
                                     </th>
                                     <th className="border border-neutral-300 px-4 py-2 text-right font-semibold">
-                                        Savings with Lithium
+                                        {texts.tco.tableHeaders.savings}
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td className="border border-neutral-300 px-4 py-2 font-medium">
-                                        1. Initial Investment
+                                        {texts.tco.rowLabels.initialInvestment}
                                     </td>
                                     <td className="border border-neutral-300 px-4 py-2 text-right">
                                         {formatCurrency(
@@ -720,7 +777,7 @@ export default function CalculatorClient({
                                 </tr>
                                 <tr>
                                     <td className="border border-neutral-300 px-4 py-2 font-medium">
-                                        2. Battery Replacement
+                                        {texts.tco.rowLabels.batteryReplacement}
                                     </td>
                                     <td className="border border-neutral-300 px-4 py-2 text-right">
                                         {formatCurrency(
@@ -741,7 +798,7 @@ export default function CalculatorClient({
                                 </tr>
                                 <tr>
                                     <td className="border border-neutral-300 px-4 py-2 font-medium">
-                                        3. Energy Cost
+                                        {texts.tco.rowLabels.energyCost}
                                     </td>
                                     <td className="border border-neutral-300 px-4 py-2 text-right">
                                         {formatCurrency(
@@ -763,7 +820,7 @@ export default function CalculatorClient({
                                 </tr>
                                 <tr>
                                     <td className="border border-neutral-300 px-4 py-2 font-medium">
-                                        4. Maintenance
+                                        {texts.tco.rowLabels.maintenance}
                                     </td>
                                     <td className="border border-neutral-300 px-4 py-2 text-right">
                                         {formatCurrency(
@@ -784,7 +841,7 @@ export default function CalculatorClient({
                                 </tr>
                                 <tr>
                                     <td className="border border-neutral-300 px-4 py-2 font-medium">
-                                        5. Labour (swapping)
+                                        {texts.tco.rowLabels.labor}
                                     </td>
                                     <td className="border border-neutral-300 px-4 py-2 text-right">
                                         {formatCurrency(
@@ -805,7 +862,7 @@ export default function CalculatorClient({
                                 </tr>
                                 <tr className="bg-neutral-100 font-bold">
                                     <td className="border border-neutral-300 px-4 py-2 font-bold">
-                                        Total 5-Year Cost
+                                        {texts.tco.rowLabels.total5YearCost}
                                     </td>
                                     <td className="border border-neutral-300 px-4 py-2 text-right">
                                         {formatCurrency(
@@ -840,53 +897,55 @@ export default function CalculatorClient({
 
                 <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-green-800">
-                        Net 5-Year Savings with Lithium LFP
+                        {texts.netSavings.title}
                     </h3>
                     <p className="mb-4 text-2xl font-bold text-green-600">
-                        {formatCurrency(results.totalSavings)} for{' '}
-                        {inputs.numberOfForklifts} forklifts
+                        {formatCurrency(results.totalSavings)}{' '}
+                        {texts.netSavings.forForklifts}{' '}
+                        {inputs.numberOfForklifts} {texts.netSavings.forklifts}
                     </p>
                     <p className="text-green-700">
-                        The net additional investment is{' '}
+                        La inversión neta adicional es{' '}
                         {formatCurrency(
                             results.lithiumInitialInvestment -
                                 results.leadAcidInitialInvestment
                         )}{' '}
-                        and is paid back in about a month. The ongoing savings
-                        are pure profit to invest in other areas of your
-                        business.
+                        y se recupera en aproximadamente un mes. Los ahorros
+                        continuos son ganancia pura para invertir en otras áreas
+                        de su negocio.
                     </p>
                 </div>
 
                 <div className="space-y-4">
                     <div className="rounded-lg border border-blue-200 bg-gray-50 p-4">
                         <h4 className="mb-2 font-semibold">
-                            Charging Room Cost Elimination
+                            Eliminación del costo de la sala de carga
                         </h4>
                         <p className="text-sm">
-                            Lead acid batteries require a dedicated room because
-                            the chemical reaction from charging and discharging
-                            lead acid batteries releases hydrogen gas from the
-                            electrolysis of distilled water. Sulfuric acid
-                            electrolyte requires careful handling due to
-                            corrosive and toxic nature. Lithium LFP batteries do
-                            not require this dedicated room and you can reclaim
-                            this valuable real-estate for storage or production.
-                            This could be an extra 1000s of square feet.
+                            Las baterías de plomo-ácido requieren una sala
+                            dedicada porque la reacción química al cargar y
+                            descargar libera hidrógeno por la electrólisis del
+                            agua destilada. El electrolito de ácido sulfúrico
+                            requiere un manejo cuidadoso por su naturaleza
+                            corrosiva y tóxica. Las baterías de litio LFP no
+                            requieren esta sala dedicada y puede recuperar ese
+                            valioso espacio para almacenamiento o producción.
+                            Esto podría significar miles de pies cuadrados
+                            extra.
                         </p>
                     </div>
 
                     <div className="rounded-lg border border-purple-200 bg-gray-50 p-4">
                         <h4 className="mb-2 font-semibold">
-                            Productivity Gains
+                            Aumento de productividad
                         </h4>
                         <p className="text-sm">
-                            This is a hidden opportunity cost that is often
-                            missed by business planners. With lead acid
-                            batteries, a forklift is taken out of service for
-                            15-20 minutes per shift for swapping. With lithium,
-                            it's a 15-second plug-in. This means more uptime and
-                            productivity. Potential savings of{' '}
+                            Este es un costo de oportunidad oculto que a menudo
+                            pasan por alto los planificadores. Con baterías de
+                            plomo-ácido, un montacargas sale de servicio 15-20
+                            minutos por turno para el cambio. Con litio, es una
+                            conexión de 15 segundos. Esto significa más tiempo
+                            activo y productividad. Ahorros potenciales de{' '}
                             {(
                                 (inputs.numberOfForklifts *
                                     inputs.shiftsPerDay *
@@ -895,7 +954,7 @@ export default function CalculatorClient({
                                     15) /
                                 60
                             ).toLocaleString()}{' '}
-                            hour swap time saved over 5 years ={' '}
+                            horas de tiempo de cambio ahorradas en 5 años ={' '}
                             {(
                                 (inputs.numberOfForklifts *
                                     inputs.shiftsPerDay *
@@ -904,28 +963,32 @@ export default function CalculatorClient({
                                     15) /
                                 60
                             ).toLocaleString()}{' '}
-                            hours of forklift operation time. What is the value
-                            of that extra productivity for your business?
+                            horas de operación de montacargas. ¿Cuál es el valor
+                            de esa productividad extra para su negocio?
                         </p>
                     </div>
 
                     <div className="rounded-lg border border-orange-200 bg-gray-50 p-4">
-                        <h4 className="mb-2 font-semibold">Improved Safety</h4>
+                        <h4 className="mb-2 font-semibold">
+                            Seguridad mejorada
+                        </h4>
                         <p className="text-sm">
-                            Reduced risk of injury from heavy battery swapping,
-                            acid spills, and hydrogen explosions. This can lower
-                            insurance premiums and costly accident lawsuits.
+                            Menor riesgo de lesiones por cambio de baterías
+                            pesadas, derrames de ácido y explosiones de
+                            hidrógeno. Esto puede reducir las primas de seguro y
+                            costosas demandas por accidentes.
                         </p>
                     </div>
 
                     <div className="rounded-lg border bg-gray-50 p-4">
                         <h4 className="mb-2 font-semibold text-teal-800">
-                            Consistent Power
+                            Potencia consistente
                         </h4>
                         <p className="text-sm text-teal-700">
-                            Lithium provides full power until it's nearly empty,
-                            unlike lead-acid which steadily declines, leading to
-                            slower operation towards the end of the shift.
+                            El litio entrega potencia total hasta casi vaciarse,
+                            a diferencia del plomo-ácido que disminuye
+                            gradualmente, provocando una operación más lenta al
+                            final del turno.
                         </p>
                     </div>
                 </div>
@@ -960,14 +1023,17 @@ function DifferenceDisplay({
 
     const getMessage = () => {
         if (isZero) {
-            return `Difference: No cost difference in ${category}`;
+            return texts.difference.zero(category);
         }
 
         if (isNegative) {
-            return `Lithium costs $${Math.abs(difference).toLocaleString()} more in ${category}`;
+            return texts.difference.negative(
+                Math.abs(difference).toLocaleString(),
+                category
+            );
         }
 
-        return `Difference: Lithium saves you $${difference.toLocaleString()} in ${category}`;
+        return texts.difference.positive(difference.toLocaleString(), category);
     };
 
     return (
