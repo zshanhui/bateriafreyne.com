@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import RoiGraph from './RoiGraph';
+import RoiGraph from './roi-graph';
 
 export interface CalculatorInputs {
     numberOfForklifts: number;
@@ -54,7 +54,7 @@ export default function CalculatorClient({
         const workingDaysPerYear = daysPerWeek * weeksPerYear;
 
         const leadAcidInitialInvestment =
-            numberOfForklifts * 2 * leadAcidBatteryCost;
+            numberOfForklifts * shiftsPerDay * leadAcidBatteryCost;
         const lithiumInitialInvestment =
             numberOfForklifts * 1 * lithiumBatteryCost;
 
@@ -129,9 +129,14 @@ export default function CalculatorClient({
         field: keyof CalculatorInputs,
         value: number
     ) => {
+        let nextValue = value;
+        if (field === 'shiftsPerDay') {
+            nextValue = Math.max(1, Math.min(3, value));
+        }
+
         setInputs(prev => ({
             ...prev,
-            [field]: value,
+            [field]: nextValue,
         }));
     };
 
@@ -192,6 +197,7 @@ export default function CalculatorClient({
                                 }
                                 className="w-24 rounded-md border border-neutral-300 px-2 py-1 text-sm focus:border-transparent focus:ring-2 focus:ring-teal-500 focus:outline-none"
                                 min={1}
+                                max={3}
                             />
                         </div>
                     </div>
@@ -390,13 +396,14 @@ export default function CalculatorClient({
                     </h3>
                     <div className="space-y-3">
                         <p className="text-neutral-700">
-                            <strong>Lead-Acid:</strong> You will need 2
-                            batteries per forklift to operate 2 shifts (one
-                            charging while the other is in use).
+                            <strong>Lead-Acid:</strong> You will need{' '}
+                            {inputs.shiftsPerDay} batteries per forklift to
+                            operate {inputs.shiftsPerDay} shifts (rotation while
+                            charging).
                         </p>
                         <p className="ml-4 text-neutral-700">
-                            {inputs.numberOfForklifts} forklifts × 2
-                            batteries/forklift ×{' '}
+                            {inputs.numberOfForklifts} forklifts ×{' '}
+                            {inputs.shiftsPerDay} batteries/forklift ×{' '}
                             {formatCurrency(inputs.leadAcidBatteryCost)}/battery
                             ={' '}
                             <strong>

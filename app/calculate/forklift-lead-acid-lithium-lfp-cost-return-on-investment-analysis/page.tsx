@@ -1,5 +1,15 @@
-import type { CalculatorInputs } from './CalculatorClient';
-import CalculatorClient from './CalculatorClient';
+import type { CalculatorInputs } from './calculator-client';
+import CalculatorClient from './calculator-client';
+
+const DEFAULT_NUMBER_OF_FORKLIFTS = 10;
+const DEFAULT_SHIFTS_PER_DAY = 1;
+const DEFAULT_DAYS_PER_WEEK = 5;
+const DEFAULT_WEEKS_PER_YEAR = 52;
+const DEFAULT_LEAD_ACID_BATTERY_COST = 3500;
+const DEFAULT_LITHIUM_BATTERY_COST = 8800;
+const DEFAULT_ELECTRICITY_RATE = 0.12;
+const DEFAULT_LABOR_COST = 25.0;
+const DEFAULT_FORKLIFT_POWER_CONSUMPTION = 6;
 
 export default async function Page(props: {
     searchParams: Promise<{ [key: string]: string | undefined }>;
@@ -12,18 +22,18 @@ export default async function Page(props: {
         numberOfForklifts:
             forkliftsFromUrl && !isNaN(parseInt(forkliftsFromUrl, 10))
                 ? Math.max(1, parseInt(forkliftsFromUrl, 10))
-                : 10,
-        shiftsPerDay: 2,
-        daysPerWeek: 5,
-        weeksPerYear: 52,
-        leadAcidBatteryCost: 4000,
-        lithiumBatteryCost: 8500,
+                : DEFAULT_NUMBER_OF_FORKLIFTS,
+        shiftsPerDay: DEFAULT_SHIFTS_PER_DAY,
+        daysPerWeek: DEFAULT_DAYS_PER_WEEK,
+        weeksPerYear: DEFAULT_WEEKS_PER_YEAR,
+        leadAcidBatteryCost: DEFAULT_LEAD_ACID_BATTERY_COST,
+        lithiumBatteryCost: DEFAULT_LITHIUM_BATTERY_COST,
         electricityRate:
             electricityRateFromUrl && !isNaN(parseFloat(electricityRateFromUrl))
                 ? Math.max(0, parseFloat(electricityRateFromUrl))
-                : 0.12,
-        laborCost: 25.0,
-        forkliftPowerConsumption: 6,
+                : DEFAULT_ELECTRICITY_RATE,
+        laborCost: DEFAULT_LABOR_COST,
+        forkliftPowerConsumption: DEFAULT_FORKLIFT_POWER_CONSUMPTION,
     };
 
     return (

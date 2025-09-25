@@ -20,24 +20,6 @@ export const helloWorldTask = task({
     },
 });
 
-function getBreakEvenPoint(a1: number, a2: number, b1: number, b2: number) {
-    const breakEvenPoint = {
-        year: 0,
-        cost: 0,
-        months: 0,
-    };
-
-    const slope = (b2 - a2) / (b1 - a1);
-    const intercept = a2 - slope * a1;
-    const breakEvenYear = intercept / slope;
-    const breakEvenCost = slope * breakEvenYear + intercept;
-    const breakEvenMonths = breakEvenYear * 12;
-    breakEvenPoint.year = breakEvenYear;
-    breakEvenPoint.cost = breakEvenCost;
-    breakEvenPoint.months = breakEvenMonths;
-    return breakEvenPoint;
-}
-
 export const createRoiChartTask = task({
     id: 'create-roi-chart',
     maxDuration: 30,
@@ -115,9 +97,9 @@ export function commonRoiChartFunc(payload: {
                         position: 'top',
                         offset: [0, -20],
                         formatter: `Break-Even\nYear ${xIntersect.toFixed(2)}\n$${yIntersect.toLocaleString()}`,
-                        fontSize: 14,
+                        fontSize: 15,
                         color: '#16A34A',
-                        fontWeight: 'bold',
+                        fontWeight: 'normal',
                     },
                     tooltip: {
                         formatter: () => {
@@ -211,7 +193,7 @@ export function commonRoiChartFunc(payload: {
 
     const options: echarts.EChartsOption = {
         title: {
-            text: `Battery replacement ROI analysis`,
+            text: `Battery Lithium Upgrade 5 Year Return on Investment Analysis`,
             subtext: `Total Savings: $${payload.totalSavings.toLocaleString()}`,
             left: 'center',
         },
@@ -245,7 +227,7 @@ export function commonRoiChartFunc(payload: {
                     [5, leadY5],
                 ],
                 smooth: true,
-                lineStyle: { width: 3, color: '#2E8B57' },
+                lineStyle: { width: 2, color: '#8B0000' },
                 itemStyle: { color: '#2E8B57' },
             } as echarts.LineSeriesOption,
             {
@@ -259,7 +241,7 @@ export function commonRoiChartFunc(payload: {
                     [5, lithiumY5],
                 ],
                 smooth: true,
-                lineStyle: { width: 3, color: '#1E90FF' },
+                lineStyle: { width: 2, color: '#1E90FF' },
                 itemStyle: { color: '#1E90FF' },
             } as echarts.LineSeriesOption,
             // Dotted connector at Year 5 between the two lines, with label
@@ -305,9 +287,9 @@ export function commonRoiChartFunc(payload: {
                     show: true,
                     position: 'right',
                     offset: [8, 0],
-                    formatter: `Savings from Lithium batteries\n$${Math.max(0, leadY5 - lithiumY5).toLocaleString()}`,
-                    color: '#374151',
-                    fontSize: 15,
+                    formatter: `Savings from Lithium\n\n$${Math.max(0, leadY5 - lithiumY5).toLocaleString()}`,
+                    color: '#166534',
+                    fontSize: 16,
                     backgroundColor: 'rgba(255,255,255,0.8)',
                     padding: [4, 6],
                     borderRadius: 4,
