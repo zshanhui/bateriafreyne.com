@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import RoiGraph from './RoiGraph';
 
 export interface CalculatorInputs {
     numberOfForklifts: number;
@@ -817,6 +818,18 @@ export default function CalculatorClient({
                         </table>
                     </div>
                 </div>
+
+                <RoiGraph
+                    leadAcidCost={[
+                        results.leadAcidInitialInvestment,
+                        results.totalLeadAcidCost,
+                    ]}
+                    lithiumCost={[
+                        results.lithiumInitialInvestment,
+                        results.totalLithiumCost,
+                    ]}
+                    totalSavings={results.totalSavings}
+                />
 
                 <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-green-800">
