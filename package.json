@@ -10,35 +10,36 @@
         "test": "pnpm prettier:check"
     },
     "dependencies": {
-        "@headlessui/react": "^2.2.0",
+        "@headlessui/react": "^2.2.9",
         "@heroicons/react": "^2.2.0",
-        "@trigger.dev/sdk": "4.0.4",
+        "@trigger.dev/sdk": "4.0.6",
         "clsx": "^2.1.1",
         "echarts": "^6.0.0",
         "front-matter": "^4.0.2",
-        "geist": "^1.3.1",
+        "geist": "^1.5.1",
         "gray-matter": "^4.0.3",
-        "import-in-the-middle": "^1.14.2",
+        "import-in-the-middle": "^1.15.0",
         "markdown-it": "^14.1.0",
         "next": "15.3.0-canary.13",
         "react": "19.0.0",
         "react-dom": "19.0.0",
-        "sonner": "^2.0.1"
+        "sonner": "^2.0.7"
     },
     "devDependencies": {
         "@tailwindcss/container-queries": "^0.1.1",
-        "@tailwindcss/postcss": "^4.0.14",
-        "@tailwindcss/typography": "^0.5.16",
-        "@trigger.dev/build": "4.0.4",
+        "@tailwindcss/postcss": "^4.1.17",
+        "@tailwindcss/typography": "^0.5.19",
+        "@trigger.dev/build": "4.0.6",
         "@types/markdown-it": "^14.1.2",
         "@types/node": "22.13.10",
         "@types/react": "19.0.12",
         "@types/react-dom": "19.0.4",
-        "postcss": "^8.5.3",
+        "postcss": "^8.5.6",
         "prettier": "3.5.3",
-        "prettier-plugin-tailwindcss": "^0.6.11",
-        "tailwindcss": "^4.0.14",
+        "prettier-plugin-tailwindcss": "^0.6.14",
+        "tailwindcss": "^4.1.17",
         "ts-standard": "^12.0.2",
         "typescript": "5.8.2"
-    }
+    },
+    "packageManager": "pnpm@10.17.0+sha512.fce8a3dd29a4ed2ec566fb53efbb04d8c44a0f05bc6f24a73046910fb9c3ce7afa35a0980500668fa3573345bd644644fa98338fa168235c80f4aa17aa17fbef"
 }
