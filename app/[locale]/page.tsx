@@ -2,6 +2,7 @@ import { Carousel } from 'components/carousel';
 import { ThreeItemGrid } from 'components/grid/three-items';
 import ComingSoon from 'components/layout/coming-soon';
 import Footer from 'components/layout/footer';
+import { Locale } from '../../../middleware';
 
 export const metadata = {
   description:
@@ -11,7 +12,9 @@ export const metadata = {
   }
 };
 
-export default function HomePage() {
+export default function HomePage(props: {
+  params: Promise<{ locale: Locale }>;
+}) {
   const isUnderConstruction = Boolean(process.env.UNDER_CONSTRUCTION === 'true' ? true : false)
   console.log('isUnderConstruction >> ', isUnderConstruction)
 

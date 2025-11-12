@@ -4,16 +4,20 @@ import clsx from 'clsx';
 import { getManufacturerFrontPage } from 'lib/shopify';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Locale } from '../../../../../middleware';
+import { getTranslations, getNestedTranslation } from '../../../../../lib/i18n';
 import { ImageDisplay } from './image-display';
 
 export async function generateMetadata(props: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ slug: string; locale: Locale }>;
 }): Promise<Metadata> {
     const params = await props.params;
     const page = getManufacturerFrontPage(params.slug);
 
     if (!page) return notFound();
     // console.log('manufacturer page contents >> ', page);
+
+    const t = await getTranslations(params.locale);
 
     return {
         // title: page.seo?.title || page.title,
@@ -27,10 +31,11 @@ export async function generateMetadata(props: {
 }
 
 export default async function Page(props: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ slug: string; locale: Locale }>;
 }) {
     const params = await props.params;
     const page = await getManufacturerFrontPage(params.slug);
+    const t = await getTranslations(params.locale);
 
     if (!page || !page.frontmatter) {
         console.error('Page or frontmatter is undefined:', page);
@@ -82,7 +87,7 @@ export default async function Page(props: {
                                     )}
                                 >
                                     <span className="min-w-[140px] text-sm font-semibold tracking-wide uppercase opacity-80">
-                                        Brand name:
+                                        {getNestedTranslation(t, 'common.labels.brandName')}
                                     </span>
                                     <span className="font-medium lg:ml-auto">
                                         {page.frontmatter.title}
@@ -96,7 +101,7 @@ export default async function Page(props: {
                                     )}
                                 >
                                     <span className="min-w-[140px] text-sm font-semibold tracking-wide uppercase opacity-80">
-                                        Legal name:
+                                        {getNestedTranslation(t, 'common.labels.legalName')}
                                     </span>
                                     <span className="font-medium lg:ml-auto">
                                         {page.frontmatter.legalName}
@@ -110,7 +115,7 @@ export default async function Page(props: {
                                     )}
                                 >
                                     <span className="min-w-[140px] text-sm font-semibold tracking-wide uppercase opacity-80">
-                                        Production address:
+                                        {getNestedTranslation(t, 'common.labels.productionAddress')}
                                     </span>
                                     <span className="font-medium lg:ml-auto">
                                         {page.frontmatter.factoryAddress}
@@ -125,7 +130,7 @@ export default async function Page(props: {
                                         )}
                                     >
                                         <span className="min-w-[140px] text-sm font-semibold tracking-wide uppercase opacity-80">
-                                            Website:
+                                            {getNestedTranslation(t, 'common.labels.website')}
                                         </span>
                                         <span className="lg:ml-auto">
                                             <a
@@ -144,13 +149,13 @@ export default async function Page(props: {
                         <section className="cta2 flex w-full items-center justify-center p-6 lg:w-1/3">
                             <div className="flex gap-3">
                                 <button className="cursor-pointer rounded-lg bg-gradient-to-r from-cyan-400 to-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-cyan-500 hover:to-blue-600 hover:shadow-xl">
-                                    View Catalog
+                                    {getNestedTranslation(t, 'common.buttons.viewCatalog')}
                                 </button>
                                 <Link
-                                    href={`/manufacturers/${params.slug}/chat-7171`}
+                                    href={`/${params.locale}/manufacturers/${params.slug}/chat-7171`}
                                     className="cursor-pointer rounded-lg bg-gradient-to-r from-pink-400 to-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-pink-500 hover:to-purple-600 hover:shadow-xl"
                                 >
-                                    Chat with Agent
+                                    {getNestedTranslation(t, 'common.buttons.chatWithAgent')}
                                 </Link>
                             </div>
                         </section>

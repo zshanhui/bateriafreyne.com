@@ -13,8 +13,18 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [currentLocale, setCurrentLocale] = useState('en');
   const openMobileMenu = () => setIsOpen(true);
   const closeMobileMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    // Extract locale from pathname
+    const segments = pathname.split('/').filter(Boolean);
+    const firstSegment = segments[0];
+    if (firstSegment && ['en', 'es', 'zh'].includes(firstSegment)) {
+      setCurrentLocale(firstSegment);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -78,16 +88,22 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                 </div>
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
-                    {menu.map((item: Menu) => (
-                      <li
-                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
-                        key={item.title}
-                      >
-                        <Link href={item.path} prefetch={true} onClick={closeMobileMenu}>
-                          {item.title}
-                        </Link>
-                      </li>
-                    ))}
+                    {menu.map((item: Menu) => {
+                      // Ensure menu paths include locale
+                      const menuPath = item.path.startsWith('/')
+                        ? `/${currentLocale}${item.path}`
+                        : `/${currentLocale}/${item.path}`;
+                      return (
+                        <li
+                          className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
+                          key={item.title}
+                        >
+                          <Link href={menuPath} prefetch={true} onClick={closeMobileMenu}>
+                            {item.title}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : null}
               </div>

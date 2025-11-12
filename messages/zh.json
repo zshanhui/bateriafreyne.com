@@ -1,0 +1,31 @@
+{
+  "common": {
+    "nav": {
+      "home": "首页",
+      "products": "产品",
+      "manufacturers": "制造商",
+      "contact": "联系",
+      "search": "搜索"
+    },
+    "buttons": {
+      "viewCatalog": "查看目录",
+      "chatWithAgent": "与代理聊天",
+      "addToCart": "添加到购物车",
+      "buyNow": "立即购买"
+    },
+    "labels": {
+      "brandName": "品牌名称：",
+      "legalName": "法定名称：",
+      "productionAddress": "生产地址：",
+      "website": "网站："
+    }
+  },
+  "manufacturer": {
+    "title": "制造商简介",
+    "underDevelopment": "制造商首页正在开发中"
+  },
+  "home": {
+    "title": "高性能 xbCommerce M2B（制造商对企业）销售店面",
+    "description": "使用 Next.js 和 Shopify storefront API 构建的高性能 xbCommerce M2B（制造商对企业）销售店面。"
+  }
+}

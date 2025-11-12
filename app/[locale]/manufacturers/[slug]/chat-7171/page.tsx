@@ -1,11 +1,12 @@
 import { getManufacturerFrontPage } from 'lib/shopify';
 import { notFound } from 'next/navigation';
+import { Locale } from '../../../../../middleware';
 import { ChatInterface } from './chat-interface';
 
 export default async function ChatPage({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ slug: string; locale: Locale }>;
 }) {
     const { slug } = await params;
     const manufacturer = getManufacturerFrontPage(slug);

@@ -5,9 +5,10 @@ import { notFound } from 'next/navigation';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { defaultSort, sorting } from 'lib/constants';
+import { Locale } from '../../../../middleware';
 
 export async function generateMetadata(props: {
-  params: Promise<{ collection: string }>;
+  params: Promise<{ collection: string; locale: Locale }>;
 }): Promise<Metadata> {
   const params = await props.params;
   const collection = await getCollection(params.collection);
@@ -22,7 +23,7 @@ export async function generateMetadata(props: {
 }
 
 export default async function CategoryPage(props: {
-  params: Promise<{ collection: string }>;
+  params: Promise<{ collection: string; locale: Locale }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;

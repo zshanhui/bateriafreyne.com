@@ -11,9 +11,10 @@ import { getProduct, getProductRecommendations } from 'lib/shopify';
 import { Image } from 'lib/shopify/types';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { Locale } from '../../../../middleware';
 
 export async function generateMetadata(props: {
-    params: Promise<{ handle: string }>;
+    params: Promise<{ handle: string; locale: Locale }>;
 }): Promise<Metadata> {
     const params = await props.params;
     const product = await getProduct(params.handle);
@@ -50,7 +51,7 @@ export async function generateMetadata(props: {
 }
 
 export default async function ProductPage(props: {
-    params: Promise<{ handle: string }>;
+    params: Promise<{ handle: string; locale: Locale }>;
 }) {
     const params = await props.params;
     const product = await getProduct(params.handle);
@@ -130,7 +131,7 @@ async function RelatedProducts({ id }: { id: string }) {
                     >
                         <Link
                             className="relative h-full w-full"
-                            href={`/product/${product.handle}`}
+                            href={`/${params.locale}/product/${product.handle}`}
                             prefetch={true}
                         >
                             <GridTileImage

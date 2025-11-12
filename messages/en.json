@@ -1,0 +1,31 @@
+{
+  "common": {
+    "nav": {
+      "home": "Home",
+      "products": "Products",
+      "manufacturers": "Manufacturers",
+      "contact": "Contact",
+      "search": "Search"
+    },
+    "buttons": {
+      "viewCatalog": "View Catalog",
+      "chatWithAgent": "Chat with Agent",
+      "addToCart": "Add to Cart",
+      "buyNow": "Buy Now"
+    },
+    "labels": {
+      "brandName": "Brand name:",
+      "legalName": "Legal name:",
+      "productionAddress": "Production address:",
+      "website": "Website:"
+    }
+  },
+  "manufacturer": {
+    "title": "Manufacturer Profile",
+    "underDevelopment": "Manufacturer front page under development"
+  },
+  "home": {
+    "title": "High-performance xbCommerce M2B (manufacturer to business) sales storefront",
+    "description": "High-performance xbCommerce M2B (manufacturer to business) sales storefront built with Next.js and Shopify storefront apis."
+  }
+}

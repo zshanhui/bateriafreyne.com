@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 
 import Prose from "components/prose";
+import { Locale } from '../../../middleware';
 
 export async function generateMetadata(props: {
-  params: Promise<{ page: string }>;
+  params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   return {
     title: "Contact Page",
@@ -17,7 +18,7 @@ export async function generateMetadata(props: {
 }
 
 export default async function Page(props: {
-  params: Promise<{ page: string }>;
+  params: Promise<{ locale: Locale }>;
 }) {
 
   // TODO this form submission needs to be handle using api router POST: /forms/general

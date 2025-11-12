@@ -1,6 +1,7 @@
 import { getCollections, getPages, getProducts } from 'lib/shopify';
 import { baseUrl, validateEnvironmentVariables } from 'lib/utils';
 import { MetadataRoute } from 'next';
+import { locales } from '../middleware';
 
 type Route = {
   url: string;
@@ -48,5 +49,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     throw JSON.stringify(error, null, 2);
   }
 
-  return [...routesMap, ...fetchedRoutes];
+  // Generate localized routes
+  const localizedRoutes: Route[] = [];
+  
+  for (const locale of locales) {
+    // Add localized home page
+    localizedRoutes.push({
+      url: `${baseUrl}/${locale}`,
+      lastModified: new Date().toISOString()
+    });
+
+    // Add localized collections
+    const localizedCollections = fetchedRoutes
+      .filter(route => route.url.includes('/search/'))
+      .map(route => ({
+        url: route.url.replace(baseUrl, `${baseUrl}/${locale}`),
+        lastModified: route.lastModified
+      }));
+    localizedRoutes.push(...localizedCollections);
+
+    // Add localized products
+    const localizedProducts = fetchedRoutes
+      .filter(route => route.url.includes('/product/'))
+      .map(route => ({
+        url: route.url.replace(baseUrl, `${baseUrl}/${locale}`),
+        lastModified: route.lastModified
+      }));
+    localizedRoutes.push(...localizedProducts);
+
+    // Add localized pages
+    const localizedPages = fetchedRoutes
+      .filter(route => !route.url.includes('/product/') && !route.url.includes('/search/') && route.url !== baseUrl)
+      .map(route => ({
+        url: route.url.replace(baseUrl, `${baseUrl}/${locale}`),
+        lastModified: route.lastModified
+      }));
+    localizedRoutes.push(...localizedPages);
+  }
+
+  return [...routesMap, ...fetchedRoutes, ...localizedRoutes];
 }
