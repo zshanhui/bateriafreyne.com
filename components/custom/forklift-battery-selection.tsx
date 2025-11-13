@@ -71,6 +71,18 @@ const customerFields = [
         required: false,
     },
     {
+        key: 'country_region',
+        label: 'Country / Region (required)',
+        type: String,
+        required: true,
+    },
+    {
+        key: 'city',
+        label: 'City (required)',
+        type: String,
+        required: true,
+    },
+    {
         key: 'comments_requests',
         label: 'Additional Comments / Requests (optional)',
         type: String,
@@ -638,10 +650,10 @@ function CustomerDetailsStep({
     onSubmit,
     isSubmitDisabled,
 }: CustomerDetailsStepProps) {
-    const leftColumnKeys: CustomerFieldKey[] = ['full_name', 'email'];
-    const rightColumnKeys: CustomerFieldKey[] = [
-        'company_name',
-        'phone_whatsapp_number',
+    const fieldRowGroups: CustomerFieldKey[][] = [
+        ['full_name', 'company_name'],
+        ['email', 'phone_whatsapp_number'],
+        ['country_region', 'city'],
     ];
     const commentsKey: CustomerFieldKey = 'comments_requests';
 
@@ -688,13 +700,25 @@ function CustomerDetailsStep({
                 you.
             </p>
 
-            <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-5">
-                    {leftColumnKeys.map(key => renderTextInput(key))}
-                </div>
-                <div className="space-y-5">
-                    {rightColumnKeys.map(key => renderTextInput(key))}
-                </div>
+            <div className="space-y-6">
+                {fieldRowGroups.map((row, rowIndex) => {
+                    const hasAnyField = row.some(key =>
+                        fields.some(field => field.key === key)
+                    );
+
+                    if (!hasAnyField) {
+                        return null;
+                    }
+
+                    return (
+                        <div
+                            key={rowIndex}
+                            className="grid gap-6 md:grid-cols-2"
+                        >
+                            {row.map(key => renderTextInput(key))}
+                        </div>
+                    );
+                })}
             </div>
 
             {commentField ? (
