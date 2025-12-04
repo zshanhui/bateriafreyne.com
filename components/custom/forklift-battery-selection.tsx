@@ -2,6 +2,7 @@
 
 import type { FormEvent, ReactNode } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 type BrandOption = {
     id: string;
@@ -125,6 +126,7 @@ export function ForkliftBatterySelection() {
     const [customerDetails, setCustomerDetails] = useState<CustomerDetails>(
         () => createInitialCustomerDetails()
     );
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const requiredCustomerFieldKeys = useMemo<CustomerFieldKey[]>(() => {
         return customerFields
@@ -202,7 +204,11 @@ export function ForkliftBatterySelection() {
         []
     );
 
-    const submitQuoteRequestForm = useCallback(() => {
+    const submitQuoteRequestForm = useCallback(async () => {
+        if (isSubmitting) {
+            return;
+        }
+
         const submissionPayload = {
             selections: {
                 brand: selectedBrand,
@@ -217,7 +223,41 @@ export function ForkliftBatterySelection() {
             customer: customerDetails,
         };
 
-        console.log('Quote Request Submission', submissionPayload);
+        setIsSubmitting(true);
+        const loadingToast = toast.loading('Submitting your quote request...');
+
+        try {
+            const response = await fetch('/api/quote-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionPayload),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to submit quote request');
+            }
+
+            toast.success(
+                'Quote request submitted successfully! We will contact you soon.',
+                {
+                    id: loadingToast,
+                }
+            );
+        } catch (error) {
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : 'An unexpected error occurred. Please try again.';
+            toast.error(errorMessage, {
+                id: loadingToast,
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     }, [
         customerDetails,
         dailyShifts,
@@ -228,6 +268,7 @@ export function ForkliftBatterySelection() {
         selectedBrandLabel,
         selectedModel,
         usageEnvironment,
+        isSubmitting,
     ]);
 
     const steps = useMemo<StepConfig[]>(() => {
@@ -383,7 +424,10 @@ export function ForkliftBatterySelection() {
                         fieldValues={customerDetails}
                         onFieldChange={handleCustomerFieldChange}
                         onSubmit={submitQuoteRequestForm}
-                        isSubmitDisabled={!areRequiredCustomerFieldsComplete}
+                        isSubmitDisabled={
+                            !areRequiredCustomerFieldsComplete || isSubmitting
+                        }
+                        isSubmitting={isSubmitting}
                     />
                 ),
             },
@@ -406,6 +450,7 @@ export function ForkliftBatterySelection() {
         customerDetails,
         handleCustomerFieldChange,
         submitQuoteRequestForm,
+        isSubmitting,
     ]);
 
     const visibleSteps = useMemo(() => {
@@ -641,6 +686,7 @@ type CustomerDetailsStepProps = {
     onFieldChange: (key: CustomerFieldKey, value: string) => void;
     onSubmit: () => void;
     isSubmitDisabled: boolean;
+    isSubmitting: boolean;
 };
 
 function CustomerDetailsStep({
@@ -649,6 +695,7 @@ function CustomerDetailsStep({
     onFieldChange,
     onSubmit,
     isSubmitDisabled,
+    isSubmitting,
 }: CustomerDetailsStepProps) {
     const fieldRowGroups: CustomerFieldKey[][] = [
         ['full_name', 'company_name'],
@@ -743,7 +790,7 @@ function CustomerDetailsStep({
                     className="inline-flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-slate-800 focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={isSubmitDisabled}
                 >
-                    Submit Quote Request
+                    {isSubmitting ? 'Submitting...' : 'Submit Quote Request'}
                 </button>
             </div>
         </form>

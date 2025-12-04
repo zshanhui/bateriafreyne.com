@@ -22,6 +22,14 @@ Integrations enable upgraded or additional functionality for Next.js Commerce
 
 You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js Commerce. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables) for this, but a `.env` file is all that is necessary.
 
+### Required Environment Variables
+
+For the quote request PDF email system, you need to set the following environment variables:
+
+- `RESEND_API_KEY` - Your Resend API key for sending emails. Get one at [resend.com](https://resend.com)
+- `QUOTE_REQUEST_RECIPIENT_EMAILS` - Comma-separated list of email addresses that will receive quote requests (e.g., `sales@example.com,admin@example.com`)
+- `RESEND_FROM_EMAIL` (optional) - The email address to send from. Defaults to `onboarding@resend.dev` if not set. Must be a verified domain in Resend.
+
 ```bash
 pnpm install
 pnpm dev
