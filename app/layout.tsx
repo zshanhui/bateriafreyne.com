@@ -2,6 +2,7 @@ import { Navbar } from 'components/layout/navbar';
 import { GeistSans } from 'geist/font/sans';
 import { baseUrl } from 'lib/utils';
 import { ReactNode } from 'react';
+import { Toaster } from 'sonner';
 import './globals.css';
 
 const { SITE_NAME } = process.env;
@@ -31,6 +32,7 @@ export default async function RootLayout({
                 {/* <CartProvider cartPromise={cart}> */}
                 <Navbar />
                 <main>{children}</main>
+                <Toaster position="top-center" />
                 {/* </CartProvider> */}
             </body>
         </html>

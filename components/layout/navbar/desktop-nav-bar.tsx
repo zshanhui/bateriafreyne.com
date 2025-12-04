@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import MobileMenu from './mobile-menu';
-import Search, { SearchSkeleton } from './search';
 
 const { SITE_NAME } = process.env;
 
@@ -37,7 +36,7 @@ export function NavbarContent({ menu }: { menu: Menu[] }) {
                 </Suspense>
             </div>
             <div className="flex w-full items-center">
-                <div className="flex w-full md:w-1/3">
+                <div className="flex w-full md:w-2/3">
                     <Link
                         href="/"
                         prefetch={true}
@@ -63,11 +62,6 @@ export function NavbarContent({ menu }: { menu: Menu[] }) {
                             ))}
                         </ul>
                     ) : null}
-                </div>
-                <div className="hidden justify-center md:flex md:w-1/3">
-                    <Suspense fallback={<SearchSkeleton />}>
-                        <Search />
-                    </Suspense>
                 </div>
                 <div className="flex justify-end md:w-1/3">
                     {/* <CartModal /> */}
