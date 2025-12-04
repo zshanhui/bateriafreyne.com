@@ -11,7 +11,10 @@ const DEFAULT_ELECTRICITY_RATE = 0.12;
 const DEFAULT_LABOR_COST = 25.0;
 const DEFAULT_FORKLIFT_POWER_CONSUMPTION = 6;
 
+import { Locale } from '../../../../middleware';
+
 export default async function Page(props: {
+    params: Promise<{ locale: Locale }>;
     searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
     const sp = await props.searchParams;

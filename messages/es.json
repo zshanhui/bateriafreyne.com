@@ -1,0 +1,31 @@
+{
+  "common": {
+    "nav": {
+      "home": "Inicio",
+      "products": "Productos",
+      "manufacturers": "Fabricantes",
+      "contact": "Contacto",
+      "search": "Buscar"
+    },
+    "buttons": {
+      "viewCatalog": "Ver Catálogo",
+      "chatWithAgent": "Chatear con Agente",
+      "addToCart": "Añadir al Carrito",
+      "buyNow": "Comprar Ahora"
+    },
+    "labels": {
+      "brandName": "Nombre de marca:",
+      "legalName": "Nombre legal:",
+      "productionAddress": "Dirección de producción:",
+      "website": "Sitio web:"
+    }
+  },
+  "manufacturer": {
+    "title": "Perfil del Fabricante",
+    "underDevelopment": "Página principal del fabricante en desarrollo"
+  },
+  "home": {
+    "title": "Tienda de alto rendimiento xbCommerce M2B (fabricante a empresa)",
+    "description": "Tienda de alto rendimiento xbCommerce M2B (fabricante a empresa) construida con Next.js y APIs de Shopify."
+  }
+}

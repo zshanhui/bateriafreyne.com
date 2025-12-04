@@ -5,6 +5,7 @@ import { Menu } from 'lib/shopify/types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
+import { LanguageSwitcher } from '../language-switcher';
 import MobileMenu from './mobile-menu';
 import Search, { SearchSkeleton } from './search';
 
@@ -13,13 +14,22 @@ const { SITE_NAME } = process.env;
 export function NavbarContent({ menu }: { menu: Menu[] }) {
     const pathname = usePathname();
     const [isManufacturersRoute, setIsManufacturersRoute] = useState(false);
+    const [currentLocale, setCurrentLocale] = useState('en');
 
     useEffect(() => {
+        // Extract locale from pathname
+        const segments = pathname.split('/').filter(Boolean);
+        const firstSegment = segments[0];
+        if (firstSegment && ['en', 'es', 'zh'].includes(firstSegment)) {
+            setCurrentLocale(firstSegment);
+        }
+
         // Check if current path is /manufacturers or any sub-path
         if (
             pathname &&
             (pathname === '/manufacturers' ||
-                pathname.startsWith('/manufacturers/'))
+                pathname.startsWith('/manufacturers/') ||
+                pathname.includes('/manufacturers'))
         ) {
             setIsManufacturersRoute(true);
         } else {
@@ -39,7 +49,7 @@ export function NavbarContent({ menu }: { menu: Menu[] }) {
             <div className="flex w-full items-center">
                 <div className="flex w-full md:w-1/3">
                     <Link
-                        href="/"
+                        href={`/${currentLocale}`}
                         prefetch={true}
                         className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
                     >
@@ -50,17 +60,23 @@ export function NavbarContent({ menu }: { menu: Menu[] }) {
                     </Link>
                     {menu.length ? (
                         <ul className="hidden gap-6 text-sm md:flex md:items-center">
-                            {menu.map((item: Menu) => (
-                                <li key={item.title}>
-                                    <Link
-                                        href={item.path}
-                                        prefetch={true}
-                                        className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
-                                    >
-                                        {item.title}
-                                    </Link>
-                                </li>
-                            ))}
+                            {menu.map((item: Menu) => {
+                                // Ensure menu paths include locale
+                                const menuPath = item.path.startsWith('/')
+                                    ? `/${currentLocale}${item.path}`
+                                    : `/${currentLocale}/${item.path}`;
+                                return (
+                                    <li key={item.title}>
+                                        <Link
+                                            href={menuPath}
+                                            prefetch={true}
+                                            className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
+                                        >
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     ) : null}
                 </div>
@@ -69,7 +85,8 @@ export function NavbarContent({ menu }: { menu: Menu[] }) {
                         <Search />
                     </Suspense>
                 </div>
-                <div className="flex justify-end md:w-1/3">
+                <div className="flex items-center justify-end gap-4 md:w-1/3">
+                    <LanguageSwitcher />
                     {/* <CartModal /> */}
                 </div>
             </div>

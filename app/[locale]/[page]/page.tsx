@@ -3,9 +3,10 @@ import type { Metadata } from 'next';
 import Prose from 'components/prose';
 import { getPage } from 'lib/shopify';
 import { notFound } from 'next/navigation';
+import { Locale } from '../../../middleware';
 
 export async function generateMetadata(props: {
-  params: Promise<{ page: string }>;
+  params: Promise<{ page: string; locale: Locale }>;
 }): Promise<Metadata> {
   const params = await props.params;
   const page = await getPage(params.page);
@@ -23,7 +24,7 @@ export async function generateMetadata(props: {
   };
 }
 
-export default async function Page(props: { params: Promise<{ page: string }> }) {
+export default async function Page(props: { params: Promise<{ page: string; locale: Locale }> }) {
   const params = await props.params;
   const page = await getPage(params.page);
 

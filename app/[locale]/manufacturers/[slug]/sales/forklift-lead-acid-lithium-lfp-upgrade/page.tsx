@@ -11,8 +11,10 @@ export const metadata = {
     },
 };
 
+import { Locale } from '../../../../../../middleware';
+
 type PageParams = {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ slug: string; locale: Locale }>;
 };
 
 const content = {
@@ -24,7 +26,7 @@ const content = {
 export default async function LeadAcidToLithiumUpgradePage({
     params,
 }: PageParams) {
-    const { slug } = await params;
+    const { slug, locale } = await params;
     if (!slug.includes('jetspower-batteries')) {
         return null;
     }
@@ -33,7 +35,7 @@ export default async function LeadAcidToLithiumUpgradePage({
         <main className="mx-auto w-full max-w-6xl px-4 py-10 md:py-14">
             <nav className="mb-6 text-sm text-neutral-600">
                 <Link
-                    href={`/manufacturers/${slug}`}
+                    href={`/${params.locale}/manufacturers/${slug}`}
                     className="hover:underline"
                 >
                     Back to Jetspower Batteries
@@ -477,7 +479,7 @@ export default async function LeadAcidToLithiumUpgradePage({
                         </p>
                     </div>
                     <a
-                        href={`/manufacturers/${slug}/chat-7171`}
+                        href={`/${locale}/manufacturers/${slug}/chat-7171`}
                         className="inline-flex items-center rounded-md bg-black px-5 py-3 text-white hover:opacity-90"
                     >
                         Discuss Your Upgrade
