@@ -15,7 +15,7 @@
     "dependencies": {
         "@headlessui/react": "^2.2.9",
         "@heroicons/react": "^2.2.0",
-        "@trigger.dev/sdk": "4.1.0",
+        "@trigger.dev/sdk": "4.1.2",
         "clsx": "^2.1.1",
         "echarts": "^6.0.0",
         "front-matter": "^4.0.2",
@@ -34,7 +34,7 @@
         "@tailwindcss/container-queries": "^0.1.1",
         "@tailwindcss/postcss": "^4.1.17",
         "@tailwindcss/typography": "^0.5.19",
-        "@trigger.dev/build": "4.1.0",
+        "@trigger.dev/build": "4.1.2",
         "@types/markdown-it": "^14.1.2",
         "@types/node": "22.13.10",
         "@types/react": "19.0.12",
